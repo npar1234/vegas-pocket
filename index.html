@@ -1,0 +1,739 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Vegas Pocket</title>
+<meta name="description" content="A pocket guide for the family weekend in Las Vegas, Nov 14 to 17, 2026: game day, food, things to do, getting around and flying out.">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#0e0b14">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Vegas Pocket">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="icon" href="icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@400;500&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap">
+<style>
+/* Tokens first. Every color in the sheet comes from these. */
+:root{
+  --color-bg:#efe6d6;
+  --color-bg-elevated:#f9f3e7;
+  --color-text:#17141c;
+  --color-text-muted:#675e6c;
+  --color-primary:#bd2a1e;
+  --color-accent:#0c7675;
+  --color-surface:#e7dbc7;
+  --color-border:#d2c5ad;
+  --color-on-primary:#fff6ea;
+  --font-display:'Bebas Neue','Oswald','Impact',sans-serif;
+  --font-body:'Instrument Sans','Avenir Next','Gill Sans',sans-serif;
+  --font-mono:'DM Mono',Menlo,Consolas,monospace;
+  --radius:12px;
+  --space-xs:0.25rem;
+  --space-sm:0.5rem;
+  --space-md:1rem;
+  --space-lg:2rem;
+  --space-xl:4rem;
+  --space-2xl:8rem;
+  --tab-h:66px;
+}
+@media (prefers-color-scheme:dark){
+  :root{
+    --color-bg:#0e0b14;
+    --color-bg-elevated:#17131f;
+    --color-text:#f2ebdf;
+    --color-text-muted:#a199ab;
+    --color-primary:#ff5f4b;
+    --color-accent:#3ad2c5;
+    --color-surface:#201a2b;
+    --color-border:#2e273a;
+    --color-on-primary:#1a0d0a;
+  }
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;color:var(--color-text);font-family:var(--font-body);font-size:16px;line-height:1.5;
+  background:var(--color-bg);
+  background-image:
+    radial-gradient(at 0% 0%, color-mix(in srgb,var(--color-primary) 9%,transparent) 0, transparent 46%),
+    radial-gradient(at 100% 12%, color-mix(in srgb,var(--color-accent) 10%,transparent) 0, transparent 44%);
+  background-attachment:fixed;
+  padding:0 var(--space-md) calc(var(--tab-h) + env(safe-area-inset-bottom) + var(--space-lg));
+  min-height:100vh;
+}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer}
+input{font:inherit;color:inherit}
+a{color:var(--color-accent)}
+h1,h2,h3,p{margin:0}
+h1,h2,h3{font-weight:400}
+.wrap{max-width:720px;margin:0 auto}
+:focus-visible{outline:2px solid var(--color-accent);outline-offset:2px;border-radius:6px}
+
+/* header */
+.top{position:sticky;top:0;z-index:8;margin:0 calc(var(--space-md) * -1);padding:calc(env(safe-area-inset-top) + 10px) var(--space-md) 8px;
+  background:color-mix(in srgb,var(--color-bg) 90%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--color-border)}
+.top-row{display:flex;align-items:center;justify-content:space-between;gap:var(--space-sm);max-width:720px;margin:0 auto}
+.brand{font-family:var(--font-display);font-size:1.9rem;letter-spacing:.04em;line-height:1}
+.brand em{font-style:normal;color:var(--color-primary)}
+.clock{font-family:var(--font-mono);font-size:.7rem;letter-spacing:.06em;color:var(--color-text-muted);text-align:right;line-height:1.35}
+.seg{display:inline-flex;border:1px solid var(--color-border);border-radius:999px;background:var(--color-bg-elevated);padding:2px}
+.seg button{font-family:var(--font-mono);font-size:.68rem;letter-spacing:.08em;padding:7px 11px;border-radius:999px;color:var(--color-text-muted);min-height:32px}
+.seg button[aria-pressed="true"]{background:var(--color-text);color:var(--color-bg)}
+
+/* views */
+section.view{display:none;padding-top:var(--space-md)}
+section.view.on{display:block}
+.eyebrow{font-family:var(--font-mono);font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--color-primary)}
+.h2{font-family:var(--font-display);font-size:clamp(1.9rem,7vw,2.6rem);letter-spacing:.02em;line-height:1;margin:var(--space-sm) 0 var(--space-xs)}
+.h3{font-family:var(--font-display);font-size:1.45rem;letter-spacing:.03em;line-height:1.1}
+.sub{color:var(--color-text-muted);margin-bottom:var(--space-md)}
+.mono{font-family:var(--font-mono);font-size:.74rem;letter-spacing:.05em}
+.muted{color:var(--color-text-muted)}
+
+/* hero: layered so it reads as a lit space, not a flat card */
+.hero{position:relative;overflow:hidden;border-radius:calc(var(--radius) + 6px);padding:var(--space-lg) var(--space-md) var(--space-md);
+  color:var(--color-on-hero,var(--color-text));border:1px solid var(--color-border);
+  background:var(--color-bg-elevated);
+  background-image:
+    radial-gradient(at 12% 100%, color-mix(in srgb,var(--color-primary) 34%,transparent) 0, transparent 55%),
+    radial-gradient(at 92% 0%, color-mix(in srgb,var(--color-accent) 30%,transparent) 0, transparent 52%)}
+.hero::before{content:'';position:absolute;inset:0;pointer-events:none;opacity:.06;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.hero::after{content:'';position:absolute;top:-30%;right:-18%;width:62vw;max-width:420px;aspect-ratio:1;border-radius:50%;
+  background:var(--color-accent);opacity:.12;filter:blur(70px);pointer-events:none}
+.hero > *{position:relative;z-index:1}
+/* marquee bulbs along the top edge */
+.bulbs{position:absolute;left:10px;right:10px;top:9px;height:8px;z-index:1;
+  background-image:radial-gradient(circle at 4px 4px, var(--color-primary) 0 2.6px, transparent 3.2px);background-size:16px 8px;opacity:.75}
+.count{font-family:var(--font-display);font-size:clamp(3.2rem,17vw,5.6rem);line-height:.92;letter-spacing:.01em;margin:var(--space-sm) 0 var(--space-xs)}
+.count small{font-size:.36em;letter-spacing:.08em;color:var(--color-text-muted);margin:0 .35em 0 .1em}
+.hero .line{font-size:1.02rem}
+.hero .line b{font-weight:600}
+.actions{display:flex;flex-wrap:wrap;gap:var(--space-sm);margin-top:var(--space-md)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;font-family:var(--font-mono);font-size:.74rem;letter-spacing:.06em;
+  padding:10px 14px;border-radius:999px;border:1px solid var(--color-border);background:var(--color-bg-elevated);color:var(--color-text);text-decoration:none;min-height:42px;
+  transition:transform .15s ease, box-shadow .15s ease}
+.btn:active{transform:translateY(1px)}
+.btn.primary{background:var(--color-primary);border-color:var(--color-primary);color:var(--color-on-primary)}
+.btn.quiet{background:transparent}
+
+/* cards */
+.card{background:var(--color-bg-elevated);border:1px solid var(--color-border);border-radius:var(--radius);padding:var(--space-md);margin-top:var(--space-md)}
+.card h3{margin-bottom:var(--space-xs)}
+.card p + p{margin-top:var(--space-sm)}
+.card.flag{border-left:4px solid var(--color-primary)}
+.card.teal{border-left:4px solid var(--color-accent)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-sm);margin-top:var(--space-md)}
+.tile{display:flex;flex-direction:column;justify-content:space-between;gap:var(--space-sm);text-align:left;background:var(--color-bg-elevated);border:1px solid var(--color-border);border-radius:var(--radius);padding:var(--space-md);min-height:104px}
+.tile b{font-family:var(--font-display);font-weight:400;font-size:1.35rem;letter-spacing:.03em;line-height:1.05}
+.tile span{font-size:.86rem;color:var(--color-text-muted);line-height:1.35}
+
+/* chips */
+.chips{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;margin:var(--space-sm) calc(var(--space-md) * -1) 0;padding:2px var(--space-md)}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:0 0 auto;font-family:var(--font-mono);font-size:.72rem;letter-spacing:.06em;padding:8px 13px;border:1px solid var(--color-border);border-radius:999px;color:var(--color-text-muted);background:var(--color-bg-elevated);white-space:nowrap;min-height:36px}
+.chip[aria-pressed="true"]{background:var(--color-text);color:var(--color-bg);border-color:var(--color-text)}
+.chip b{font-family:var(--font-display);font-weight:400;font-size:1.05rem;letter-spacing:.04em;margin-right:5px}
+
+/* timeline */
+.tl{list-style:none;margin:var(--space-md) 0 0;padding:0}
+.stop{display:grid;grid-template-columns:62px 1fr;gap:var(--space-sm);padding:var(--space-md) 0;border-top:1px solid var(--color-border)}
+.stop:first-child{border-top:0}
+.stop .t{font-family:var(--font-mono);font-size:.78rem;letter-spacing:.04em;color:var(--color-text-muted);padding-top:4px}
+.stop .t b{display:block;font-family:var(--font-display);font-weight:400;font-size:1.5rem;letter-spacing:.02em;color:var(--color-text);line-height:1}
+.stop h3{font-family:var(--font-display);font-size:1.4rem;letter-spacing:.02em;line-height:1.08}
+.stop .where{font-family:var(--font-mono);font-size:.72rem;letter-spacing:.04em;color:var(--color-text-muted);margin:3px 0 5px}
+.stop p{font-size:.95rem}
+.stop.done h3,.stop.done p{opacity:.45;text-decoration:line-through;text-decoration-thickness:1px}
+.stop.next{background:color-mix(in srgb,var(--color-accent) 9%,transparent);margin:0 calc(var(--space-sm) * -1);padding-left:var(--space-sm);padding-right:var(--space-sm);border-radius:var(--radius);border-top-color:transparent}
+.stop.next + .stop{border-top-color:transparent}
+.row{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin-top:var(--space-sm)}
+.tag{font-family:var(--font-mono);font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;padding:3px 7px;border-radius:5px;border:1px solid var(--color-border);color:var(--color-text-muted)}
+.tag.fixed{background:var(--color-primary);border-color:var(--color-primary);color:var(--color-on-primary)}
+.tag.idea{border-style:dashed}
+.lnk{font-family:var(--font-mono);font-size:.72rem;letter-spacing:.05em;color:var(--color-accent);text-decoration:none;padding:7px 10px;border:1px solid var(--color-border);border-radius:999px;min-height:34px;display:inline-flex;align-items:center}
+.lnk.on{background:var(--color-accent);border-color:var(--color-accent);color:var(--color-bg)}
+
+/* numbered steps */
+.steps{list-style:none;counter-reset:s;margin:var(--space-sm) 0 0;padding:0}
+.steps li{counter-increment:s;position:relative;padding:var(--space-sm) 0 var(--space-sm) 44px;border-top:1px dashed var(--color-border)}
+.steps li:first-child{border-top:0}
+.steps li::before{content:counter(s);position:absolute;left:0;top:var(--space-sm);width:30px;height:30px;border-radius:50%;display:grid;place-items:center;
+  font-family:var(--font-display);font-size:1.15rem;background:var(--color-text);color:var(--color-bg)}
+.steps b{font-weight:600}
+.steps span{display:block;color:var(--color-text-muted);font-size:.93rem}
+
+/* scoreboard */
+.board{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:var(--space-sm);margin-top:var(--space-md);text-align:center}
+.board .team{font-family:var(--font-display);font-size:clamp(1.7rem,8vw,2.6rem);letter-spacing:.03em;line-height:1}
+.board .team small{display:block;font-family:var(--font-mono);font-size:.62rem;letter-spacing:.16em;color:var(--color-text-muted);margin-top:4px}
+.board .vs{font-family:var(--font-mono);font-size:.7rem;letter-spacing:.2em;color:var(--color-text-muted)}
+.times{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--space-sm);margin-top:var(--space-md)}
+.times div{background:var(--color-bg-elevated);border:1px solid var(--color-border);border-radius:var(--radius);padding:var(--space-sm) var(--space-sm) 10px;text-align:center}
+.times div.live{border-color:var(--color-primary);box-shadow:inset 0 -3px 0 var(--color-primary)}
+.times b{display:block;font-family:var(--font-display);font-weight:400;font-size:1.65rem;line-height:1.05;letter-spacing:.02em}
+.times span{font-family:var(--font-mono);font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:var(--color-text-muted)}
+.yn{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-md);margin-top:var(--space-sm)}
+.yn h4{margin:0 0 4px;font-family:var(--font-mono);font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;font-weight:500}
+.yn .y h4{color:var(--color-accent)} .yn .n h4{color:var(--color-primary)}
+.yn ul{margin:0;padding-left:1.05em;font-size:.93rem}
+.yn li{margin:3px 0}
+
+/* explore */
+.place{background:var(--color-bg-elevated);border:1px solid var(--color-border);border-radius:var(--radius);padding:var(--space-md);margin-top:var(--space-sm)}
+.place header{display:flex;justify-content:space-between;align-items:flex-start;gap:var(--space-sm)}
+.place h3{font-family:var(--font-display);font-size:1.45rem;letter-spacing:.02em;line-height:1.08}
+.place .where{font-family:var(--font-mono);font-size:.7rem;letter-spacing:.05em;color:var(--color-text-muted);margin:3px 0 6px}
+.place p{font-size:.95rem}
+.star{flex:0 0 auto;width:40px;height:40px;border-radius:50%;border:1px solid var(--color-border);display:grid;place-items:center;color:var(--color-text-muted)}
+.star[aria-pressed="true"]{background:var(--color-primary);border-color:var(--color-primary);color:var(--color-on-primary)}
+.star svg{width:18px;height:18px}
+.empty{padding:var(--space-lg) 0;text-align:center;color:var(--color-text-muted)}
+
+/* info */
+details{background:var(--color-bg-elevated);border:1px solid var(--color-border);border-radius:var(--radius);margin-top:var(--space-sm);overflow:hidden}
+summary{list-style:none;cursor:pointer;padding:var(--space-md);display:flex;justify-content:space-between;align-items:center;gap:var(--space-sm);font-family:var(--font-display);font-size:1.4rem;letter-spacing:.03em;line-height:1.1}
+summary::-webkit-details-marker{display:none}
+summary::after{content:'+';font-family:var(--font-mono);font-size:1.1rem;color:var(--color-primary)}
+details[open] summary::after{content:'\2212'}
+.body{padding:0 var(--space-md) var(--space-md)}
+.body p{margin-top:var(--space-sm);font-size:.96rem}
+.body p:first-child{margin-top:0}
+.body h4{margin:var(--space-md) 0 0;font-family:var(--font-mono);font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;font-weight:500;color:var(--color-primary)}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:4px var(--space-md);margin-top:var(--space-sm);font-size:.94rem}
+.kv dt{font-family:var(--font-mono);font-size:.72rem;letter-spacing:.05em;color:var(--color-text-muted);padding-top:3px}
+.kv dd{margin:0}
+.field{display:flex;align-items:center;gap:var(--space-sm);margin-top:var(--space-sm);flex-wrap:wrap}
+.field input{background:var(--color-bg);border:1px solid var(--color-border);border-radius:10px;padding:10px 12px;min-height:44px;font-family:var(--font-mono)}
+.result{margin-top:var(--space-sm);padding:var(--space-sm) var(--space-md);border-radius:10px;background:color-mix(in srgb,var(--color-accent) 12%,transparent);font-size:.96rem}
+.result b{font-family:var(--font-display);font-weight:400;font-size:1.5rem;letter-spacing:.02em}
+.src{font-size:.82rem;color:var(--color-text-muted)}
+.src a{color:inherit}
+footer{margin-top:var(--space-lg);text-align:center;font-family:var(--font-mono);font-size:.66rem;letter-spacing:.08em;color:var(--color-text-muted)}
+
+/* tabs */
+.tabs{position:fixed;left:0;right:0;bottom:0;z-index:9;background:color-mix(in srgb,var(--color-bg-elevated) 94%,transparent);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  border-top:1px solid var(--color-border);padding-bottom:env(safe-area-inset-bottom)}
+.tabs div{max-width:720px;margin:0 auto;display:grid;grid-template-columns:repeat(5,1fr);height:var(--tab-h)}
+.tabs button{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;font-family:var(--font-mono);font-size:.62rem;letter-spacing:.14em;color:var(--color-text-muted);position:relative}
+.tabs svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.tabs button[aria-current="page"]{color:var(--color-primary)}
+.tabs button[aria-current="page"]::before{content:'';position:absolute;top:0;left:28%;right:28%;height:3px;border-radius:0 0 3px 3px;background:var(--color-primary)}
+
+/* first-run sheet */
+.sheet{position:fixed;inset:0;z-index:20;display:none;align-items:flex-end;justify-content:center;background:color-mix(in srgb,var(--color-text) 55%,transparent)}
+.sheet.on{display:flex}
+.sheet .box{width:100%;max-width:720px;background:var(--color-bg-elevated);border-radius:22px 22px 0 0;padding:var(--space-lg) var(--space-md) calc(var(--space-lg) + env(safe-area-inset-bottom));border-top:1px solid var(--color-border)}
+.pick{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-sm);margin-top:var(--space-md)}
+.pick button{border:1px solid var(--color-border);border-radius:var(--radius);padding:var(--space-md);text-align:left;background:var(--color-bg);min-height:96px}
+.pick b{display:block;font-family:var(--font-display);font-weight:400;font-size:1.6rem;letter-spacing:.03em;line-height:1}
+.pick span{font-size:.82rem;color:var(--color-text-muted)}
+
+/* entrance choreography */
+@keyframes reveal{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+.reveal{animation:reveal .55s ease-out both}
+.reveal-1{animation-delay:.08s}.reveal-2{animation-delay:.16s}.reveal-3{animation-delay:.24s}.reveal-4{animation-delay:.32s}.reveal-5{animation-delay:.4s}
+@media (prefers-reduced-motion:reduce){
+  .reveal{animation:none}
+  .btn{transition:none}
+}
+@media (min-width:640px){ .grid2{grid-template-columns:repeat(4,1fr)} }
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="top-row">
+    <h1 class="brand">VEGAS <em>Pocket</em></h1>
+    <div class="seg" role="group" aria-label="Which hotel are you staying at">
+      <button type="button" data-hotel="ex" aria-pressed="false">EXCALIBUR</button>
+      <button type="button" data-hotel="ny" aria-pressed="false">NY-NY</button>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="view" id="v-now" aria-label="Now"></section>
+  <section class="view" id="v-plan" aria-label="Plan"></section>
+  <section class="view" id="v-game" aria-label="Game day"></section>
+  <section class="view" id="v-go" aria-label="Eat, drink and do"></section>
+  <section class="view" id="v-info" aria-label="Info"></section>
+  <footer>VEGAS POCKET · NOV 14 TO 17, 2026 · FACTS CHECKED SAT NOV 14</footer>
+</main>
+
+<nav class="tabs" aria-label="Sections"><div>
+  <button type="button" data-tab="now"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg>NOW</button>
+  <button type="button" data-tab="plan"><svg viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/></svg>PLAN</button>
+  <button type="button" data-tab="game"><svg viewBox="0 0 24 24"><ellipse cx="12" cy="12" rx="9" ry="5.5" transform="rotate(-35 12 12)"/><path d="M9.5 14.5l5-5M10.6 11.2l2.2 2.2M12 9.8l2.2 2.2"/></svg>GAME</button>
+  <button type="button" data-tab="go"><svg viewBox="0 0 24 24"><path d="M12 21s-6.5-6-6.5-11a6.5 6.5 0 0113 0c0 5-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.3"/></svg>GO</button>
+  <button type="button" data-tab="info"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 11v5.5M12 7.6v.4"/></svg>INFO</button>
+</div></nav>
+
+<div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="sheet-h">
+  <div class="box">
+    <p class="eyebrow">Welcome to Las Vegas</p>
+    <h2 class="h2" id="sheet-h">Where are you staying?</h2>
+    <p class="muted">Walking directions, food picks and airport rides adjust to your hotel. You can switch any time at the top.</p>
+    <div class="pick">
+      <button type="button" data-hotel="ex"><b>EXCALIBUR</b><span>The castle, south side of Tropicana</span></button>
+      <button type="button" data-hotel="ny"><b>NEW YORK-NEW YORK</b><span>The skyline, north side of Tropicana</span></button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ---------- data ---------- */
+// All clock times are Pacific. November is standard time (UTC-8), so 1:05 PM PT = 21:05 UTC.
+const TRIP={
+  dates:'Sat Nov 14 to Tue Nov 17, 2026', tz:'America/Los_Angeles',
+  lots:Date.UTC(2026,10,15,17,0), doors:Date.UTC(2026,10,15,19,5), kick:Date.UTC(2026,10,15,21,5),
+  gameEnd:Date.UTC(2026,10,16,0,20)   // rough: about 3h15 after kickoff
+};
+const HOTELS={
+  ex:{name:'Excalibur',q:'Excalibur Hotel & Casino Las Vegas',taxi:'about $21',site:'https://excalibur.mgmresorts.com/',
+      out:'Checkout is posted as 11:00 AM.'},
+  ny:{name:'New York-New York',q:'New York-New York Hotel & Casino Las Vegas',taxi:'about $25',site:'https://newyorknewyork.mgmresorts.com/',
+      out:'Checkout time is on your key packet; most Strip hotels use 11:00 AM.'}
+};
+const MEET='The footbridge over Tropicana Ave between Excalibur and New York-New York';
+
+// status: fixed = a real appointment, idea = a suggestion. ex / ny = text that swaps with the hotel toggle.
+const DAYS=[
+ {id:'sat',label:'Saturday',short:'SAT',num:'14',date:'2026-11-14',sub:'Land, settle in, find each other.',stops:[
+  {t:'15:00',title:'Check in and drop bags',cat:'Hotel',where:'Your hotel',
+   ex:'Excalibur posts check-in at 3:00 PM. If you are early, the bell desk will hold your bags.',
+   ny:'Rooms are usually ready mid-afternoon. If you are early, the bell desk will hold your bags.'},
+  {t:'17:30',title:'Meet in the middle',cat:'Meet',where:'Footbridge over Tropicana Ave',map:'Excalibur pedestrian bridge Tropicana Las Vegas',
+   note:'The two hotels face each other across Tropicana. The footbridge between them is about five minutes from either lobby, and you cannot cross at street level there.'},
+  {t:'18:30',title:'Dinner close to home',cat:'Eat',where:'Either hotel',go:'eat',
+   ex:'In the castle: Buca di Beppo for family-style Italian, or Dick\'s Last Resort for loud and silly. Across the bridge, Nine Fine Irishmen and Il Fornaio.',
+   ny:'Downstairs: Nine Fine Irishmen (Irish pub), Il Fornaio (Italian), or Gallagher\'s Steakhouse if you booked. Across the bridge, Buca di Beppo.'},
+  {t:'20:30',title:'The Park, then the Bellagio fountains',cat:'See',where:'The Park to Park MGM to Bellagio',map:'Aria Express Tram Park MGM Station',
+   note:'Walk The Park beside New York-New York to Park MGM and ride the free Aria Express tram to Bellagio. It runs every 7 to 10 minutes. The fountains go off through the evening.'},
+  {t:'21:30',title:'Live music or dueling pianos',cat:'Drink',where:'New York-New York',map:'Nine Fine Irishmen Las Vegas',
+   note:'Nine Fine Irishmen has a live band most nights, starting around 9. The Bar at Times Square, on the same casino floor, is the dueling piano bar.'}
+ ]},
+ {id:'sun',label:'Sunday',short:'SUN',num:'15',date:'2026-11-15',sub:'Game day. Raiders and Seahawks at 1:05 PM.',stops:[
+  {t:'09:00',title:'Breakfast before the crowd',cat:'Eat',where:'Your hotel',
+   ex:'The Buffet at Excalibur does breakfast and brunch. Johnny Rockets is open around the clock. The food court upstairs has Einstein Bros. and Krispy Kreme.',
+   ny:'America serves breakfast all morning. Greenberg\'s Deli and 48th and Crepe on Village Street are quicker.'},
+  {t:'10:15',title:'Phones, tickets, clear bag',cat:'Prep',where:'Before you leave the room',tab:'game',
+   note:'Add your tickets to your phone wallet on hotel Wi-Fi. Bags must be clear and no bigger than 12 by 6 by 12 inches. The stadium takes cards only.'},
+  {t:'10:30',title:'Meet at the Excalibur tram station',cat:'Meet',where:'Front of the castle, by the footbridge',map:'Excalibur Tram Station Las Vegas',status:'fixed',
+   ex:'Out the front doors toward the Strip. The tram station sits where the footbridge from New York-New York lands.',
+   ny:'Leave about 10:20. Cross the footbridge over Tropicana; the tram station is right where it lands at Excalibur.'},
+  {t:'10:40',title:'Free tram to Mandalay Bay',cat:'Ride',where:'Excalibur to Mandalay Bay, express',
+   note:'Southbound trams skip Luxor and take about five minutes. They are posted to start at 10 AM. If the line is long, walk it indoors through Luxor and Mandalay Place in 20 to 25 minutes.'},
+  {t:'10:50',title:'Walk the Hacienda Bridge',cat:'Walk',where:'Mandalay Bay to Allegiant Stadium',map:'Hacienda Avenue Bridge Las Vegas',
+   note:'Follow the crowd through Mandalay Bay to Hacienda Ave. The bridge is closed to cars on game days. About 0.3 miles, 10 to 15 minutes.'},
+  {t:'11:05',title:'Doors open',cat:'Game',where:'Allegiant Stadium',status:'fixed',map:'Allegiant Stadium',
+   note:'Two hours to find your seats, eat, and look around. Parking lots open at 9:00 AM for anyone tailgating.'},
+  {t:'13:05',title:'Kickoff: Raiders vs Seahawks',cat:'Game',where:'Allegiant Stadium',status:'fixed',tab:'game',
+   note:'The stadium is enclosed, so weather is not a factor inside.'},
+  {t:'16:30',title:'Walk back the way you came',cat:'Walk',where:'Hacienda Bridge to Mandalay Bay',
+   note:'The tram back fills fast after a game. The indoor walk through Mandalay Place and Luxor is often quicker than the line.'},
+  {t:'18:30',title:'Dinner and the night game',cat:'Eat',where:'Either hotel',go:'eat',
+   ex:'TAP Sports Bar in the castle has the late game on. Across the bridge, Tom\'s Watch Bar is wall-to-wall screens.',
+   ny:'Tom\'s Watch Bar is wall-to-wall screens for the late game. Shake Shack and Broadway Burger Bar are the easy options.'}
+ ]},
+ {id:'mon',label:'Monday',short:'MON',num:'16',date:'2026-11-16',sub:'Free day. Pick a direction.',stops:[
+  {t:'09:30',title:'Slow breakfast',cat:'Eat',where:'Your hotel',
+   ex:'The Buffet at Excalibur, or coffee at The Roasted Bean.',
+   ny:'America for a sit-down breakfast, or a crepe from 48th and Crepe.'},
+  {t:'11:00',title:'Option A: the Strip, heading north',cat:'See',where:'Park MGM to Bellagio and beyond',go:'do',
+   note:'Ride the free Aria Express tram from Park MGM to Bellagio for the Conservatory and the fountains, then keep walking north toward Caesars and the LINQ. Blocks are longer than they look.'},
+  {t:'11:00',title:'Option B: Hoover Dam',cat:'See',where:'About 45 minutes each way by car',map:'Hoover Dam',
+   note:'Needs a car or a tour. Plan on half a day door to door.'},
+  {t:'15:00',title:'Coaster and chocolate',cat:'Do',where:'New York-New York',map:'Big Apple Coaster Las Vegas',
+   note:'The Big Apple Coaster loops around the hotel skyline. Hershey\'s Chocolate World is two floors of candy at street level.'},
+  {t:'17:15',title:'Monday night game, if you want it',cat:'Drink',where:'Tom\'s Watch Bar or TAP Sports Bar',
+   note:'Both sports bars carry the Monday night game. Kickoff is usually around 5:15 PM here.'},
+  {t:'19:00',title:'Fremont Street, downtown',cat:'See',where:'About 15 to 25 minutes by car',map:'Fremont Street Experience',
+   note:'Old Vegas under a light canopy, with live bands on outdoor stages. Rideshare is quickest. The Deuce bus also goes downtown; a 24-hour pass is $8.'},
+  {t:'20:00',title:'Or stay in for a show',cat:'Show',where:'Excalibur',go:'show',
+   note:'Tournament of Kings, The Australian Bee Gees Show, Mac King\'s comedy magic and Thunder From Down Under all play the castle. Not every show runs every night, so check the box office.'}
+ ]},
+ {id:'tue',label:'Tuesday',short:'TUE',num:'17',date:'2026-11-17',sub:'Pack, check out, fly home.',stops:[
+  {t:'08:30',title:'Breakfast and pack',cat:'Eat',where:'Your hotel',
+   ex:'Johnny Rockets is open around the clock if your flight is early.',
+   ny:'America or Greenberg\'s Deli. Village Street is fastest.'},
+  {t:'11:00',title:'Check out',cat:'Hotel',where:'Your hotel',status:'fixed',
+   ex:'Checkout is posted as 11:00 AM. Late flight? The bell desk will hold your bags.',
+   ny:'Check your key packet for the checkout time; most Strip hotels use 11:00 AM. The bell desk will hold bags for a late flight.'},
+  {t:'--',title:'Ride to the airport',cat:'Ride',where:'Harry Reid International (LAS)',flight:true,tab:'info',
+   note:'The airport is about two miles away, but this is Grand Prix week and roads north of here are being closed off. Leave a cushion.'}
+ ]}
+];
+
+// at: ny / ex = inside that hotel, walk = short walk from either, ride = needs a ride
+const PLACES=[
+ {id:'nfi',cat:'eat',at:'ny',name:'Nine Fine Irishmen',where:'New York-New York',text:'An Irish pub built in Ireland and shipped over. Fish and chips, shepherd\'s pie, and a live band most nights from around 9.'},
+ {id:'gal',cat:'eat',at:'ny',name:'Gallagher\'s Steakhouse',where:'New York-New York',text:'The dry-aged steakhouse, dinner only. Book ahead; it fills up on weekends.'},
+ {id:'ilf',cat:'eat',at:'ny',name:'Il Fornaio',where:'New York-New York',text:'Italian with wood-fired pizza, and a bakery counter for pastries and coffee in the morning.'},
+ {id:'ame',cat:'eat',at:'ny',name:'America',where:'New York-New York',text:'Big-menu American diner food, breakfast through dinner. The safe pick for a mixed group.'},
+ {id:'tom',cat:'eat',at:'ny',name:'Tom\'s Watch Bar',where:'New York-New York',text:'A sports bar built around screens, open breakfast through late. Best seat in the house for the games you are not at.'},
+ {id:'gyg',cat:'eat',at:'ny',name:'Gonzalez y Gonzalez',where:'New York-New York',text:'Mexican with a tequila bar. Lunch and dinner.'},
+ {id:'chi',cat:'eat',at:'ny',name:'Chin Chin',where:'New York-New York',text:'Asian cafe and sushi bar, open breakfast through dinner.'},
+ {id:'vil',cat:'eat',at:'ny',name:'Village Street Eateries',where:'New York-New York',text:'A Greenwich Village street of quick counters: Sirrico\'s Pizza by the slice, Greenberg\'s Deli, 48th and Crepe.'},
+ {id:'fh',cat:'eat',at:'ny',name:'NY-NY Food Hall',where:'New York-New York',text:'New York Pizzeria, Wing Zone and Capriotti\'s sandwiches. Fast and cheap by Strip standards.'},
+ {id:'ss',cat:'eat',at:'ny',name:'Shake Shack',where:'New York-New York',text:'Burgers, hot dogs and shakes. Lunch and dinner.'},
+ {id:'bbb',cat:'eat',at:'ny',name:'Broadway Burger Bar and Grill',where:'New York-New York',text:'Sit-down burgers and a long beer list, near the bridge.'},
+ {id:'bts',cat:'drink',at:'ny',name:'Bar at Times Square',where:'New York-New York',text:'The dueling piano bar. Loud, crowded, sing-along. Goes late.'},
+ {id:'coy',cat:'drink',at:'ny',name:'Coyote Ugly',where:'New York-New York',text:'Bartenders dancing on the bar, DJs, drink specials. Weekends.'},
+ {id:'cho',cat:'drink',at:'ny',name:'The Chocolate Bar',where:'New York-New York',text:'Cocktails next door to Hershey\'s Chocolate World.'},
+ {id:'big',cat:'drink',at:'ny',name:'Big Chill',where:'New York-New York',text:'Frozen cocktails to carry out to the Strip.'},
+ {id:'bee',cat:'drink',at:'walk',name:'Beerhaus',where:'The Park, beside New York-New York',text:'Craft beer, bar games and an outdoor patio on the way to T-Mobile Arena.'},
+ {id:'cst',cat:'do',at:'ny',name:'Big Apple Coaster',where:'New York-New York',text:'The roller coaster that loops the hotel skyline. Tickets are sold inside the hotel.'},
+ {id:'her',cat:'do',at:'ny',name:'Hershey\'s Chocolate World',where:'New York-New York, Strip side',text:'Two floors of chocolate and candy at street level.'},
+ {id:'prk',cat:'do',at:'walk',name:'The Park',where:'Between New York-New York and Park MGM',text:'An outdoor walk of patios and desert planting that leads to T-Mobile Arena and the Aria Express tram.'},
+
+ {id:'buf',cat:'eat',at:'ex',name:'The Buffet at Excalibur',where:'Excalibur',text:'Breakfast, brunch and lunch. Good value for a group that cannot agree.'},
+ {id:'buc',cat:'eat',at:'ex',name:'Buca di Beppo',where:'Excalibur',text:'Family-style Italian in platters meant for sharing. Lunch through late.'},
+ {id:'dlr',cat:'eat',at:'ex',name:'Dick\'s Last Resort',where:'Excalibur',text:'Finger food, giant drinks, live music, and servers who insult you on purpose.'},
+ {id:'jr',cat:'eat',at:'ex',name:'Johnny Rockets',where:'Excalibur',text:'Diner burgers and shakes, open 24 hours.'},
+ {id:'tap',cat:'eat',at:'ex',name:'TAP Sports Bar',where:'Excalibur',text:'Bar food and beer with the games on. Lunch and dinner.'},
+ {id:'fc',cat:'eat',at:'ex',name:'Castle Walk Food Court',where:'Excalibur, Castle Walk level',text:'Popeyes, Fatburger, Del Taco, Jimmy John\'s, Pick Up Stix, Einstein Bros., Krispy Kreme, Cinnabon and Starbucks.'},
+ {id:'exb',cat:'drink',at:'ex',name:'Casino bars',where:'Excalibur',text:'Center Bar in the middle of the floor, the Lobby Bar, Sherwood Bar by Johnny Rockets, and Thunder Bar by the showroom.'},
+ {id:'tok',cat:'show',at:'ex',name:'Tournament of Kings',where:'Excalibur',text:'Jousting knights and dinner eaten with your hands in a 900-seat arena. The longest-running dinner show on the Strip.'},
+ {id:'abg',cat:'show',at:'ex',name:'The Australian Bee Gees Show',where:'Excalibur',text:'A 75-minute tribute concert.'},
+ {id:'mac',cat:'show',at:'ex',name:'Mac King Comedy Magic',where:'Excalibur',text:'A 70-minute comedy magic show. An easy crowd-pleaser.'},
+ {id:'thu',cat:'show',at:'ex',name:'Thunder From Down Under',where:'Excalibur',text:'The Australian male revue. 18 and over with ID.'},
+ {id:'fun',cat:'do',at:'ex',name:'Fun Dungeon',where:'Excalibur',text:'More than 200 arcade and midway games.'},
+
+ {id:'eat',cat:'eat',at:'walk',name:'Eataly',where:'Park MGM, Strip side',text:'An Italian market hall with pasta, pizza and wine counters. About ten minutes north of New York-New York.'},
+ {id:'bel',cat:'do',at:'walk',name:'Bellagio fountains and Conservatory',where:'Bellagio, via the Aria Express tram',text:'Free on both counts. Fountain shows run through the afternoon and evening; the indoor garden changes with the season.'},
+ {id:'sgn',cat:'do',at:'walk',name:'Welcome to Fabulous Las Vegas sign',where:'South of Mandalay Bay',text:'The photo. Ride the free tram to Mandalay Bay, then it is roughly a 15-minute walk south, or a short rideshare.'},
+ {id:'shk',cat:'do',at:'walk',name:'Shark Reef Aquarium',where:'Mandalay Bay',text:'A walk-through aquarium at the far end of Mandalay Bay. The free tram from Excalibur gets you there.'},
+ {id:'tmo',cat:'show',at:'walk',name:'T-Mobile Arena',where:'Behind The Park',text:'Hockey and concerts a few minutes from both hotels. See what is on this weekend.'},
+ {id:'fre',cat:'do',at:'ride',name:'Fremont Street Experience',where:'Downtown, 15 to 25 minutes by car',text:'Old Vegas under a light-show canopy, with live bands and cheaper tables. Best after dark.'},
+ {id:'mob',cat:'do',at:'ride',name:'The Mob Museum',where:'Downtown',text:'Organized crime and law enforcement history in the old federal courthouse, with a speakeasy in the basement.'},
+ {id:'neo',cat:'do',at:'ride',name:'The Neon Museum',where:'Downtown',text:'The boneyard of retired casino signs. Night tours sell out, so book ahead.'},
+ {id:'hir',cat:'do',at:'ride',name:'High Roller and the LINQ Promenade',where:'Mid-Strip',text:'The big observation wheel, at the end of an outdoor street of bars and shops.'},
+ {id:'sph',cat:'do',at:'ride',name:'Sphere',where:'East of the Venetian',text:'The outside is the free show. This week it sits inside the Grand Prix circuit, so expect closed streets around it.'},
+ {id:'hoo',cat:'do',at:'ride',name:'Hoover Dam',where:'About 45 minutes by car',text:'Half a day out of town. Go early; the walk across the top is free once you park.'},
+ {id:'red',cat:'do',at:'ride',name:'Red Rock Canyon',where:'About 30 minutes west by car',text:'A 13-mile scenic loop through red sandstone. The loop usually needs a timed-entry reservation this time of year, so check before you drive out.'}
+];
+
+/* ---------- state ---------- */
+const LS='vegas-pocket-v1';
+const S=Object.assign({hotel:null,day:null,done:{},saved:{},flight:''},load(),{tab:'now',cat:'all',near:'any'});
+S.day=null; // always open on Now, on today
+function load(){try{return JSON.parse(localStorage.getItem(LS))||{}}catch(e){return {}}}
+function save(){try{localStorage.setItem(LS,JSON.stringify(S))}catch(e){}}
+
+/* ---------- time ---------- */
+// ?now=2026-11-15T10:20 previews the app at a given Pacific time.
+const PREVIEW=new URLSearchParams(location.search).get('now');
+function nowMs(){
+  if(PREVIEW){const m=PREVIEW.match(/(\d+)-(\d+)-(\d+)T(\d+):(\d+)/);if(m)return Date.UTC(+m[1],+m[2]-1,+m[3],+m[4]+8,+m[5]);}
+  return Date.now();
+}
+function pt(ms){
+  const p=Object.fromEntries(new Intl.DateTimeFormat('en-US',{timeZone:TRIP.tz,weekday:'short',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',hourCycle:'h23'}).formatToParts(new Date(ms)).map(x=>[x.type,x.value]));
+  return {date:`${p.year}-${p.month}-${p.day}`,mins:(+p.hour)*60+(+p.minute),wd:p.weekday};
+}
+function fmt(hm){ if(hm==='--')return {h:'TBD',ap:''}; let [h,m]=hm.split(':').map(Number);const ap=h<12?'AM':'PM';h=h%12||12;return {h:`${h}:${String(m).padStart(2,'0')}`,ap}; }
+function fmtMin(mins){mins=((mins%1440)+1440)%1440;const h=Math.floor(mins/60),m=mins%60;const f=fmt(`${h}:${String(m).padStart(2,'0')}`);return `${f.h} ${f.ap}`;}
+function toMin(hm){const [h,m]=hm.split(':').map(Number);return h*60+m;}
+function todayId(){const d=pt(nowMs()).date;const day=DAYS.find(x=>x.date===d);return day?day.id:(d<DAYS[0].date?DAYS[0].id:DAYS[DAYS.length-1].id);}
+
+/* ---------- helpers ---------- */
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const gmap=q=>'https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(q);
+const gwalk=q=>'https://www.google.com/maps/dir/?api=1&destination='+encodeURIComponent(q)+'&travelmode=walking';
+const ghours=q=>'https://www.google.com/search?q='+encodeURIComponent(q+' Las Vegas hours');
+const H=()=>HOTELS[S.hotel||'ex'];
+const other=()=>HOTELS[S.hotel==='ny'?'ex':'ny'];
+const ext='target="_blank" rel="noopener"';
+function noteFor(s){return s[S.hotel||'ex']||s.note||'';}
+
+/* ---------- game clock ---------- */
+function gameState(){
+  const n=nowMs();
+  if(n<TRIP.lots)return {k:'pre',label:'Kickoff in',to:TRIP.kick};
+  if(n<TRIP.doors)return {k:'lots',label:'Doors open in',to:TRIP.doors};
+  if(n<TRIP.kick)return {k:'doors',label:'Kickoff in',to:TRIP.kick};
+  if(n<TRIP.gameEnd)return {k:'live',label:'Game on'};
+  return {k:'post',label:'Final'};
+}
+function countHTML(to){
+  let s=Math.max(0,Math.floor((to-nowMs())/1000));const d=Math.floor(s/86400);s-=d*86400;const h=Math.floor(s/3600);s-=h*3600;const m=Math.floor(s/60);
+  return (d?`${d}<small>D</small>`:'')+`${h}<small>H</small>${String(m).padStart(2,'0')}<small>M</small>`;
+}
+
+/* ---------- flight ---------- */
+function leaveBy(){
+  if(!S.flight)return null;const f=toMin(S.flight);
+  return {flight:fmtMin(f),airport:fmtMin(f-120),car:fmtMin(f-150),carMin:f-150};
+}
+
+/* ---------- views ---------- */
+function stopHTML(s,i,dayId,isNext){
+  const key=dayId+':'+i,done=!!S.done[key];
+  let t=s.t,extra='';
+  if(s.flight){const lb=leaveBy();if(lb){t=`${Math.floor(lb.carMin/60)}:${String(lb.carMin%60).padStart(2,'0')}`;extra=`<p><b>In the car by ${lb.car}</b> for your ${lb.flight} flight. That puts you at the airport two hours ahead.</p>`;}
+    else extra=`<p>Add your flight time under Info and this turns into a leave-by time.</p>`;}
+  const f=fmt(t);
+  return `<li class="stop${done?' done':''}${isNext?' next':''}">
+    <div class="t"><b>${f.h}</b>${f.ap}</div>
+    <div>
+      <h3>${esc(s.title)}</h3>
+      <div class="where">${esc(s.where)}</div>
+      <p>${esc(noteFor(s))}</p>${extra}
+      <div class="row">
+        <span class="tag ${s.status==='fixed'?'fixed':'idea'}">${s.status==='fixed'?'Set':'Idea'}</span>
+        <span class="tag">${esc(s.cat)}</span>
+        ${s.map?`<a class="lnk" ${ext} href="${gmap(s.map)}">Map</a>`:''}
+        ${s.tab?`<button type="button" class="lnk" data-tab="${s.tab}">${s.tab==='game'?'Game day':'Details'}</button>`:''}
+        ${s.go?`<button type="button" class="lnk" data-go="${s.go}">See picks</button>`:''}
+        <button type="button" class="lnk${done?' on':''}" data-done="${key}" aria-pressed="${done}">${done?'Done':'Mark done'}</button>
+      </div>
+    </div></li>`;
+}
+function nextIndex(day){
+  const n=pt(nowMs());if(day.date!==n.date)return -1;
+  return day.stops.findIndex((s,i)=>!S.done[day.id+':'+i]&&s.t!=='--'&&toMin(s.t)>=n.mins-20);
+}
+
+function renderNow(){
+  const g=gameState(),n=pt(nowMs()),day=DAYS.find(d=>d.id===todayId()),h=H();
+  let hero;
+  if(g.k==='pre'||g.k==='lots'||g.k==='doors'){
+    hero=`<p class="eyebrow reveal reveal-1">${g.label}</p>
+      <div class="count reveal reveal-2" id="count">${countHTML(g.to)}</div>
+      <p class="line reveal reveal-3"><b>Raiders vs Seahawks</b> · Sunday 1:05 PM · Allegiant Stadium</p>
+      <div class="actions reveal reveal-4"><button type="button" class="btn primary" data-tab="game">Game day plan</button><a class="btn" ${ext} href="${gwalk('Allegiant Stadium')}">Walk there</a></div>`;
+  }else if(g.k==='live'){
+    hero=`<p class="eyebrow reveal reveal-1">Sunday at Allegiant Stadium</p>
+      <div class="count reveal reveal-2">GAME ON</div>
+      <p class="line reveal reveal-3"><b>Raiders vs Seahawks.</b> Afterward, walk back over the Hacienda Bridge; the indoor route through Mandalay Place and Luxor beats the tram line.</p>
+      <div class="actions reveal reveal-4"><button type="button" class="btn primary" data-tab="game">Getting back</button></div>`;
+  }else{
+    const lb=leaveBy();
+    hero=`<p class="eyebrow reveal reveal-1">${n.date>='2026-11-17'?'Fly-out day':'Still in town'}</p>
+      <div class="count reveal reveal-2">${lb?lb.car.replace(' ','<small>')+'</small>':(n.date>='2026-11-17'?'HEAD HOME':'FREE DAY')}</div>
+      <p class="line reveal reveal-3">${lb?`<b>Be in the car by then</b> for your ${lb.flight} flight.`:(n.date>='2026-11-17'?'<b>Checkout, then the airport.</b> Add your flight time for a leave-by.':'<b>No schedule today.</b> Pick a direction and go.')}</p>
+      <div class="actions reveal reveal-4"><button type="button" class="btn primary" data-tab="${n.date>='2026-11-17'?'info':'go'}">${n.date>='2026-11-17'?'Leaving plan':'Find something'}</button><button type="button" class="btn" data-tab="plan">Today's ideas</button></div>`;
+  }
+  const ni=nextIndex(day);
+  const upcoming=day.stops.map((s,i)=>({s,i})).filter(x=>ni<0?true:x.i>=ni).slice(0,3);
+  $('#v-now').innerHTML=`
+    <div class="hero"><div class="bulbs" aria-hidden="true"></div>${hero}</div>
+    <p class="eyebrow reveal reveal-4" style="margin-top:var(--space-lg)">${day.date===n.date?'Up next today':day.label+' at a glance'}</p>
+    <ul class="tl reveal reveal-5">${upcoming.map((x,k)=>stopHTML(x.s,x.i,day.id,k===0&&ni>=0)).join('')}</ul>
+    <div class="actions"><button type="button" class="btn quiet" data-tab="plan">Full plan for ${day.label}</button></div>
+    <div class="grid2">
+      <button type="button" class="tile" data-go="eat"><b>EAT NEAR ME</b><span>What is good inside ${esc(h.name)}</span></button>
+      <button type="button" class="tile" data-go="do"><b>THINGS TO DO</b><span>Walkable, and worth a ride</span></button>
+      <button type="button" class="tile" data-info="around"><b>GET AROUND</b><span>Free trams, monorail, the Deuce</span></button>
+      <button type="button" class="tile" data-info="leave"><b>FLY OUT</b><span>Tuesday checkout and airport ride</span></button>
+    </div>
+    <div class="card teal">
+      <p class="eyebrow">Two hotels, one group</p>
+      <h3 class="h3">MEET IN THE MIDDLE</h3>
+      <p>${esc(h.name)} and ${esc(other().name)} face each other across Tropicana Ave. The footbridge between them is about five minutes from either lobby.</p>
+      <div class="actions"><a class="btn" ${ext} href="${gwalk(other().q)}">Walk to ${esc(other().name)}</a></div>
+    </div>`;
+}
+
+function renderPlan(){
+  if(!S.day)S.day=todayId();
+  const day=DAYS.find(d=>d.id===S.day)||DAYS[0],ni=nextIndex(day);
+  $('#v-plan').innerHTML=`
+    <p class="eyebrow">${TRIP.dates}</p>
+    <div class="chips" role="group" aria-label="Day">${DAYS.map(d=>`<button type="button" class="chip" data-day="${d.id}" aria-pressed="${d.id===day.id}"><b>${d.num}</b>${d.short}</button>`).join('')}</div>
+    <h2 class="h2">${day.label.toUpperCase()}</h2>
+    <p class="sub">${esc(day.sub)} Only the items marked Set are real appointments. The rest are ideas.</p>
+    <ul class="tl">${day.stops.map((s,i)=>stopHTML(s,i,day.id,i===ni)).join('')}</ul>`;
+}
+
+function renderGame(){
+  const g=gameState(),ny=S.hotel==='ny';
+  const head=g.k==='live'?'GAME ON':g.k==='post'?'FINAL':countHTML(g.to);
+  const steps=[
+    ny?['Cross the footbridge to Excalibur','Over Tropicana Ave, about five minutes from the New York-New York casino floor. The tram station is right where the bridge lands.']
+      :['Head out front to the tram station','Out the main doors toward the Strip. The station is at the front of the castle, where the footbridge from New York-New York lands.'],
+    ['Ride the free tram to Mandalay Bay','Southbound trams run express and skip Luxor. About five minutes. Posted hours are 10 AM to midnight, every 3 to 7 minutes.'],
+    ['Walk through Mandalay Bay to Hacienda Ave','Follow the stadium signs and the crowd in silver and black.'],
+    ['Cross the Hacienda Bridge','Closed to cars on game days, pedestrians only. About 0.3 miles, 10 to 15 minutes to the gates.']
+  ];
+  $('#v-game').innerHTML=`
+    <div class="hero"><div class="bulbs" aria-hidden="true"></div>
+      <p class="eyebrow reveal reveal-1">Week 10 · Sunday, Nov 15 · Allegiant Stadium</p>
+      <div class="board reveal reveal-2"><div class="team">SEAHAWKS<small>SEATTLE</small></div><div class="vs">AT</div><div class="team">RAIDERS<small>LAS VEGAS</small></div></div>
+      <p class="eyebrow reveal reveal-3" style="margin-top:var(--space-md);text-align:center">${g.k==='live'||g.k==='post'?'&nbsp;':g.label}</p>
+      <div class="count reveal reveal-3" style="text-align:center" id="count">${head}</div>
+    </div>
+    <div class="times">
+      <div class="${g.k==='lots'?'live':''}"><b>9:00</b><span>Lots open</span></div>
+      <div class="${g.k==='doors'?'live':''}"><b>11:05</b><span>Doors</span></div>
+      <div class="${g.k==='live'?'live':''}"><b>1:05</b><span>Kickoff</span></div>
+    </div>
+    <div class="card flag">
+      <p class="eyebrow">From ${esc(H().name)}</p>
+      <h3 class="h3">WALK IT. ALLOW 45 MINUTES.</h3>
+      <p>Both hotels are close enough that a car is slower than your feet on game day. Leave around ${ny?'10:20':'10:30'} to be there for doors, or as late as noon and still make kickoff.</p>
+      <ol class="steps">${steps.map(s=>`<li><b>${s[0]}</b><span>${s[1]}</span></li>`).join('')}</ol>
+      <p class="muted">Long tram line? Walk indoors from Excalibur through Luxor and the Shoppes at Mandalay Place. Roughly 20 to 25 minutes to Mandalay Bay.</p>
+      <div class="actions"><a class="btn primary" ${ext} href="${gwalk('Allegiant Stadium')}">Walking directions</a><a class="btn" ${ext} href="${gmap('Excalibur Tram Station Las Vegas')}">Tram station</a></div>
+    </div>
+    <div class="card">
+      <p class="eyebrow">At the gate</p>
+      <h3 class="h3">CLEAR BAGS ONLY</h3>
+      <div class="yn">
+        <div class="y"><h4>Gets in</h4><ul><li>Clear bag up to 12 x 6 x 12 inches</li><li>Small clutch up to 4.5 x 6.5 inches</li><li>Phone, wallet, keys in your pockets</li></ul></div>
+        <div class="n"><h4>Turned away</h4><ul><li>Backpacks and regular purses</li><li>Fanny packs and camera bags</li><li>Coolers and luggage</li></ul></div>
+      </div>
+      <p style="margin-top:var(--space-sm)"><b>Cards only.</b> The stadium does not take cash anywhere inside.</p>
+      <p><b>Tickets live on your phone.</b> Add them to your wallet on hotel Wi-Fi before you leave. Service at the gates crawls when the whole crowd arrives at once.</p>
+    </div>
+    <div class="card">
+      <p class="eyebrow">After the final whistle</p>
+      <h3 class="h3">GETTING BACK</h3>
+      <p>Walk back over the Hacienda Bridge into Mandalay Bay. The tram north stops at Luxor and ends at Excalibur, but it packs out after games. Walking indoors through Mandalay Place and Luxor is usually faster than waiting.</p>
+      <p class="muted">If someone needs a ride instead: rideshare picks up at Lot N, 5285 Dean Martin Dr, north of the stadium. Taxis use Diablo Dr at Procyon St. Expect surge prices and a wait.</p>
+      <div class="actions"><a class="btn" ${ext} href="${gwalk(H().q)}">Walk back to ${esc(H().name)}</a><a class="btn" ${ext} href="https://www.allegiantstadium.com/">Stadium guide</a></div>
+    </div>`;
+}
+
+const CATS=[['all','All'],['eat','Eat'],['drink','Drink'],['do','Do'],['show','Shows'],['saved','Saved']];
+const NEARS=[['any','Anywhere'],['mine','In my hotel'],['walk','Short walk'],['ride','Worth a ride']];
+const starSVG='<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 3.2l2.7 5.6 6.1.8-4.5 4.2 1.1 6-5.4-3-5.4 3 1.1-6L3.2 9.6l6.1-.8z"/></svg>';
+function renderGo(){
+  const mine=S.hotel||'ex',oth=mine==='ny'?'ex':'ny';
+  let list=PLACES.filter(p=>S.cat==='all'?true:S.cat==='saved'?S.saved[p.id]:p.cat===S.cat);
+  // "Short walk" includes the other hotel, since it is five minutes over the bridge
+  list=list.filter(p=>S.near==='any'?true:S.near==='mine'?p.at===mine:S.near==='walk'?(p.at==='walk'||p.at===oth):p.at==='ride');
+  const rank={[mine]:0,walk:1,[oth]:2,ride:3};
+  list.sort((a,b)=>rank[a.at]-rank[b.at]);
+  const badge=p=>p.at===mine?'In your hotel':p.at===oth?'5 min over the bridge':p.at==='walk'?'Short walk':'Needs a ride';
+  $('#v-go').innerHTML=`
+    <p class="eyebrow">Eat, drink, do</p>
+    <h2 class="h2">WHAT SOUNDS GOOD?</h2>
+    <div class="chips" role="group" aria-label="Kind">${CATS.map(c=>`<button type="button" class="chip" data-cat="${c[0]}" aria-pressed="${S.cat===c[0]}">${c[1]}</button>`).join('')}</div>
+    <div class="chips" role="group" aria-label="How far">${NEARS.map(c=>`<button type="button" class="chip" data-near="${c[0]}" aria-pressed="${S.near===c[0]}">${c[1]}</button>`).join('')}</div>
+    ${list.length?list.map(p=>`<article class="place">
+      <header><div><h3>${esc(p.name)}</h3><div class="where">${esc(p.where)}</div></div>
+      <button type="button" class="star" data-save="${p.id}" aria-pressed="${!!S.saved[p.id]}" aria-label="${S.saved[p.id]?'Remove from saved':'Save'} ${esc(p.name)}">${starSVG}</button></header>
+      <p>${esc(p.text)}</p>
+      <div class="row"><span class="tag">${badge(p)}</span>
+        <a class="lnk" ${ext} href="${gmap(p.name+' '+p.where+' Las Vegas')}">Map</a>
+        <a class="lnk" ${ext} href="${ghours(p.name)}">Hours</a></div>
+    </article>`).join(''):`<p class="empty">${S.cat==='saved'?'Nothing saved yet. Tap the star on anything you want to remember.':'Nothing here for that combination. Try Anywhere.'}</p>`}
+    <p class="src" style="margin-top:var(--space-md)">Hours change and some shows skip nights. The Hours link opens a live search so you can check before you walk over.</p>`;
+}
+
+function renderInfo(){
+  const h=H(),lb=leaveBy();
+  $('#v-info').innerHTML=`
+    <p class="eyebrow">Getting around and getting home</p>
+    <h2 class="h2">THE PRACTICAL PART</h2>
+
+    <details id="i-around" open><summary>GETTING AROUND</summary><div class="body">
+      <h4>On foot</h4>
+      <p>Hotels on the Strip look close and are not. Budget 10 to 15 minutes per resort. At Tropicana Ave you cross by footbridge, not at street level: bridges link all four corners, including Excalibur, New York-New York and MGM Grand.</p>
+      <h4>Free tram: Excalibur, Luxor, Mandalay Bay</h4>
+      <p>Posted to run 10 AM to midnight daily, every 3 to 7 minutes. Southbound is express to Mandalay Bay. Northbound stops at Luxor, then Excalibur. The station is out front of Excalibur, by the footbridge.</p>
+      <h4>Free tram: Park MGM, Crystals, Bellagio</h4>
+      <p>The Aria Express. Listed as 8 AM to 2 AM daily, every 7 to 10 minutes, about six minutes end to end. Board at Park MGM, a short walk north of New York-New York through The Park.</p>
+      <h4>Monorail</h4>
+      <p>Closest station is MGM Grand, across the Strip by footbridge. It runs up the east side to the LINQ, Harrah's, the Convention Center and Sahara. Sunday 7 AM to 3 AM, Monday 7 AM to midnight, and nonstop from Tuesday 7 AM for race week. $6.25 a ride or $15.50 for a day pass; a little less if you buy on your phone. It does not go to the airport or the stadium.</p>
+      <h4>The Deuce bus</h4>
+      <p>Double-decker bus up and down the Strip to downtown, about every 15 minutes. $6 for two hours, $8 for 24 hours, $20 for three days. Buy in the rideRTC app, or on board with exact fare.</p>
+      <h4>Rideshare and taxis</h4>
+      <p>Each hotel has a marked rideshare pickup, usually in or near the parking garage; follow the signs from the casino floor. Taxis line up at the main entrance.</p>
+      <div class="actions"><a class="btn" ${ext} href="https://www.lvmonorail.com/">Monorail</a><a class="btn" ${ext} href="https://www.rtcsnv.com/ways-to-travel/fares-passes/">Bus fares</a></div>
+    </div></details>
+
+    <details id="i-f1"><summary>GRAND PRIX WEEK</summary><div class="body">
+      <p>The Las Vegas Grand Prix runs Thursday to Saturday, Nov 19 to 21, after you leave. The track is being built now, and it sits north of you: Las Vegas Blvd from Harmon up to Sands, plus Koval and Harmon. Tropicana and the two hotels are outside it.</p>
+      <p><b>What you will notice:</b> Koval Lane is closed between Rochelle and Harmon from Saturday through Nov 23. Starting Tuesday, the Deuce and several bus routes switch to race-week routes. Rides heading north or east take longer than the map says.</p>
+      <p><b>What to do about it:</b> add 15 to 20 minutes to any ride, and to the airport run on Tuesday.</p>
+      <div class="actions"><a class="btn" ${ext} href="https://transportation.f1lasvegasgp.com/">Race-week road map</a></div>
+    </div></details>
+
+    <details id="i-leave" open><summary>LEAVING TUESDAY</summary><div class="body">
+      <p><b>${esc(h.name)}:</b> ${esc(h.out)} The bell desk holds bags if your flight is later.</p>
+      <h4>When to leave</h4>
+      <div class="field"><label for="flight">My flight departs at</label><input type="time" id="flight" value="${esc(S.flight)}"></div>
+      ${lb?`<div class="result">Be in the car by <b>${lb.car}</b><br>At the airport by ${lb.airport}, two hours before your ${lb.flight} flight, with half an hour for the ride and race-week traffic.</div>`:`<p class="muted">Enter a time and this works out when to be in the car.</p>`}
+      <h4>The ride</h4>
+      <p>Harry Reid International is about two miles from the hotels. Taxis charge a flat zone fare between the airport and Strip hotels: ${h.taxi} for ${esc(h.name)}, with a possible $3 card fee. Ask the driver to confirm the flat rate before you pull away. Rideshare is usually similar outside of surge.</p>
+      <h4>Which terminal</h4>
+      <p>Terminal 1 and Terminal 3 are separate buildings with separate curbs. Check which one your airline uses before you get in the car.</p>
+      <div class="actions"><a class="btn" ${ext} href="https://www.harryreidairport.com/">Airport site</a><a class="btn" ${ext} href="${gmap('Harry Reid International Airport')}">Map</a></div>
+    </div></details>
+
+    <details id="i-know"><summary>GOOD TO KNOW</summary><div class="body">
+      <p><b>Carry ID.</b> You need to be 21 for the casino floor, and bars check.</p>
+      <p><b>Drinks on the Strip</b> are legal to carry outside, but not in glass. Ask for a plastic cup.</p>
+      <p><b>Drink water.</b> The air is very dry, and it catches visitors out on day two.</p>
+      <p><b>Casinos allow smoking.</b> Restaurants and showrooms generally do not.</p>
+      <p><b>Use hotel Wi-Fi</b> to load tickets and boarding passes before you head out. Cell service thins out in crowds.</p>
+    </div></details>
+
+    <details id="i-help"><summary>IF SOMETHING GOES WRONG</summary><div class="body">
+      <p><b>Emergency:</b> call 911. Hotel security also responds fast; any dealer or desk can call them.</p>
+      <p><b>Lost someone?</b> Go to the footbridge between the two hotels and call them from there.</p>
+      <p><b>Lost a room key or wallet?</b> Front desk first, with ID.</p>
+      <div class="actions"><a class="btn" href="tel:911">Call 911</a><a class="btn" ${ext} href="${gmap('pharmacy near '+h.q)}">Nearest pharmacy</a><a class="btn" ${ext} href="${gmap('urgent care near '+h.q)}">Urgent care</a><a class="btn" ${ext} href="${h.site}">${esc(h.name)} site</a></div>
+    </div></details>
+
+    <details id="i-src"><summary>WHERE THIS CAME FROM</summary><div class="body">
+      <p class="src">Checked Saturday, Nov 14, 2026. Game times, bag policy, rideshare lot and bridge closure: <a ${ext} href="https://www.allegiantstadium.com/">allegiantstadium.com</a>. Monorail hours and fares: <a ${ext} href="https://www.lvmonorail.com/">lvmonorail.com</a>. Bus fares: <a ${ext} href="https://www.rtcsnv.com/ways-to-travel/fares-passes/">rtcsnv.com</a>. Excalibur outlets and shows: the hotel's 2026 fact sheet. New York-New York outlets and Excalibur checkout time: the hotels' Marriott listings. Road closures: FOX5 Las Vegas, Nov 6.</p>
+      <p class="src">Tram hours, taxi fares, walking times and Aria Express hours come from third-party guides or are estimates, so treat them as about right. Plan times are suggestions except the ones marked Set.</p>
+      <p class="src">Nothing you tap here leaves your phone. Saved places, checked-off items and your flight time are stored on this device only.</p>
+    </div></details>`;
+}
+
+/* ---------- wiring ---------- */
+const RENDER={now:renderNow,plan:renderPlan,game:renderGame,go:renderGo,info:renderInfo};
+function show(tab,keepScroll){
+  S.tab=tab;save();
+  document.querySelectorAll('section.view').forEach(v=>v.classList.toggle('on',v.id==='v-'+tab));
+  document.querySelectorAll('.tabs button').forEach(b=>b.dataset.tab===tab?b.setAttribute('aria-current','page'):b.removeAttribute('aria-current'));
+  RENDER[tab]();
+  if(!keepScroll)window.scrollTo(0,0);
+}
+function setHotel(h){
+  S.hotel=h;save();
+  document.querySelectorAll('.seg button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.hotel===h));
+  $('#sheet').classList.remove('on');
+  show(S.tab,true);
+}
+document.addEventListener('click',e=>{
+  const b=e.target.closest('button,a');if(!b)return;const d=b.dataset;
+  if(d.hotel)return setHotel(d.hotel);
+  if(d.tab)return show(d.tab);
+  if(d.day){S.day=d.day;save();return renderPlan();}
+  if(d.done){S.done[d.done]?delete S.done[d.done]:S.done[d.done]=1;save();return RENDER[S.tab]();}
+  if(d.cat){S.cat=d.cat;save();return renderGo();}
+  if(d.near){S.near=d.near;save();return renderGo();}
+  if(d.save){S.saved[d.save]?delete S.saved[d.save]:S.saved[d.save]=1;save();return renderGo();}
+  if(d.go){S.cat=d.go;S.near='any';return show('go');}
+  if(d.info){show('info');const el=$('#i-'+d.info);if(el){el.open=true;el.scrollIntoView({block:'start'});window.scrollBy(0,-70);}return;}
+});
+document.addEventListener('change',e=>{
+  if(e.target.id==='flight'){S.flight=e.target.value||'';save();renderInfo();}
+});
+// keep the countdown honest without re-rendering the whole view
+setInterval(()=>{
+  const g=gameState(),c=$('#v-'+S.tab+' #count');
+  if(c&&g.to)c.innerHTML=countHTML(g.to);
+  if(S.tab==='now'||S.tab==='game'){const k=document.body.dataset.gk;if(k&&k!==g.k)RENDER[S.tab]();}
+  document.body.dataset.gk=g.k;
+},20000);
+document.addEventListener('visibilitychange',()=>{if(!document.hidden)RENDER[S.tab]();});
+
+if(!RENDER[S.tab])S.tab='now';
+document.querySelectorAll('.seg button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.hotel===S.hotel));
+document.body.dataset.gk=gameState().k;
+show(S.tab);
+if(!S.hotel)$('#sheet').classList.add('on');
+if('serviceWorker' in navigator&&location.protocol==='https:')navigator.serviceWorker.register('sw.js').catch(()=>{});
+</script>
+</body>
+</html>
