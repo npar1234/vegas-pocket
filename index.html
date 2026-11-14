@@ -140,6 +140,7 @@ section.view.on{display:block}
 
 .row{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin-top:var(--space-sm)}
 .tag{font-family:var(--font-mono);font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;padding:3px 7px;border-radius:5px;border:1px solid var(--color-border);color:var(--color-text-muted)}
+.lnk.menu{background:var(--color-accent);border-color:var(--color-accent);color:var(--color-bg)}
 .lnk{font-family:var(--font-mono);font-size:.72rem;letter-spacing:.05em;color:var(--color-accent);text-decoration:none;padding:7px 10px;border:1px solid var(--color-border);border-radius:999px;min-height:34px;display:inline-flex;align-items:center}
 
 /* numbered steps */
@@ -331,6 +332,18 @@ const PLACES=[
  {id:'red',cat:'do',at:'ride',name:'Red Rock Canyon',where:'About 30 minutes west by car',text:'A 13-mile scenic loop through red sandstone. The loop usually needs a timed-entry reservation this time of year, so check before you drive out.'}
 ];
 
+// Menu pages. Restaurant-run sites where one exists; otherwise the hotel's own page for that restaurant.
+const NY='https://newyorknewyork.mgmresorts.com/en/restaurants/',EX='https://excalibur.mgmresorts.com/en/restaurants/';
+const MENUS={
+  nfi:NY+'nine-fine-irishmen.html', gal:NY+'gallaghers-steakhouse.html', ilf:'https://www.ilfornaio.com/nyny-las-vegas-menus/',
+  ame:NY+'america.html', tom:'https://tomswatchbar.com/location/las-vegas/menu/las-vegas/lunch-dinner/', gyg:NY+'gonzalez-y-gonzalez.html',
+  chi:NY+'chin-chin-cafe-and-sushi-bar.html', vil:NY+'village-street-eateries.html', fh:NY+'nyny-food-hall.html',
+  ss:NY+'shake-shack.html', bbb:NY+'broadway-burger-bar-and-grill.html', bee:NY+'beerhaus.html',
+  buf:EX+'the-buffet.html', buc:'https://www.bucadibeppo.com/locations/excalibur-hotel-casino-las-vegas/',
+  dlr:'https://www.dickslastresort.com/locations/las-vegas/', jr:EX+'johnny-rockets.html', tap:EX+'tap-sports-bar.html', fc:EX+'food-court.html',
+  eat:'https://www.eataly.com/stores/las-vegas.html'
+};
+
 /* ---------- state ---------- */
 const LS='vegas-pocket-v1';
 const S=Object.assign({hotel:null,saved:{},flight:''},load(),{tab:'now',cat:'all',near:'any'}); // always open on Home
@@ -509,10 +522,11 @@ function renderGo(){
       <button type="button" class="star" data-save="${p.id}" aria-pressed="${!!S.saved[p.id]}" aria-label="${S.saved[p.id]?'Remove from saved':'Save'} ${esc(p.name)}">${starSVG}</button></header>
       <p>${esc(p.text)}</p>
       <div class="row"><span class="tag">${badge(p)}</span>
+        ${MENUS[p.id]?`<a class="lnk menu" ${ext} href="${MENUS[p.id]}">Menu</a>`:''}
         <a class="lnk" ${ext} href="${gmap(p.name+' '+p.where+' Las Vegas')}">Map</a>
         <a class="lnk" ${ext} href="${ghours(p.name)}">Hours</a></div>
     </article>`).join(''):`<p class="empty">${S.cat==='saved'?'Nothing saved yet. Tap the star on anything you want to remember.':'Nothing here for that combination. Try Anywhere.'}</p>`}
-    <p class="src" style="margin-top:var(--space-md)">Hours change and some shows skip nights. The Hours link opens a live search so you can check before you walk over.</p>`;
+    <p class="src" style="margin-top:var(--space-md)">Hours change and some shows skip nights. Menu opens the restaurant's own page. The Hours link opens a live search so you can check before you walk over.</p>`;
 }
 
 function renderAround(){
