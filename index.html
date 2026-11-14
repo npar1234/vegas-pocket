@@ -138,24 +138,9 @@ section.view.on{display:block}
 .chip[aria-pressed="true"]{background:var(--color-text);color:var(--color-bg);border-color:var(--color-text)}
 .chip b{font-family:var(--font-display);font-weight:400;font-size:1.05rem;letter-spacing:.04em;margin-right:5px}
 
-/* timeline */
-.tl{list-style:none;margin:var(--space-md) 0 0;padding:0}
-.stop{display:grid;grid-template-columns:62px 1fr;gap:var(--space-sm);padding:var(--space-md) 0;border-top:1px solid var(--color-border)}
-.stop:first-child{border-top:0}
-.stop .t{font-family:var(--font-mono);font-size:.78rem;letter-spacing:.04em;color:var(--color-text-muted);padding-top:4px}
-.stop .t b{display:block;font-family:var(--font-display);font-weight:400;font-size:1.5rem;letter-spacing:.02em;color:var(--color-text);line-height:1}
-.stop h3{font-family:var(--font-display);font-size:1.4rem;letter-spacing:.02em;line-height:1.08}
-.stop .where{font-family:var(--font-mono);font-size:.72rem;letter-spacing:.04em;color:var(--color-text-muted);margin:3px 0 5px}
-.stop p{font-size:.95rem}
-.stop.done h3,.stop.done p{opacity:.45;text-decoration:line-through;text-decoration-thickness:1px}
-.stop.next{background:color-mix(in srgb,var(--color-accent) 9%,transparent);margin:0 calc(var(--space-sm) * -1);padding-left:var(--space-sm);padding-right:var(--space-sm);border-radius:var(--radius);border-top-color:transparent}
-.stop.next + .stop{border-top-color:transparent}
 .row{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin-top:var(--space-sm)}
 .tag{font-family:var(--font-mono);font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;padding:3px 7px;border-radius:5px;border:1px solid var(--color-border);color:var(--color-text-muted)}
-.tag.fixed{background:var(--color-primary);border-color:var(--color-primary);color:var(--color-on-primary)}
-.tag.idea{border-style:dashed}
 .lnk{font-family:var(--font-mono);font-size:.72rem;letter-spacing:.05em;color:var(--color-accent);text-decoration:none;padding:7px 10px;border:1px solid var(--color-border);border-radius:999px;min-height:34px;display:inline-flex;align-items:center}
-.lnk.on{background:var(--color-accent);border-color:var(--color-accent);color:var(--color-bg)}
 
 /* numbered steps */
 .steps{list-style:none;counter-reset:s;margin:var(--space-sm) 0 0;padding:0}
@@ -240,7 +225,7 @@ footer{margin-top:var(--space-lg);text-align:center;font-family:var(--font-mono)
   .reveal{animation:none}
   .btn{transition:none}
 }
-@media (min-width:640px){ .grid2{grid-template-columns:repeat(4,1fr)} }
+@media (min-width:640px){ .grid2{grid-template-columns:repeat(3,1fr)} }
 </style>
 </head>
 <body>
@@ -255,20 +240,20 @@ footer{margin-top:var(--space-lg);text-align:center;font-family:var(--font-mono)
 </header>
 
 <main class="wrap">
-  <section class="view" id="v-now" aria-label="Now"></section>
-  <section class="view" id="v-plan" aria-label="Plan"></section>
+  <section class="view" id="v-now" aria-label="Home"></section>
+  <section class="view" id="v-go" aria-label="Find food, bars and entertainment"></section>
+  <section class="view" id="v-around" aria-label="Getting around"></section>
   <section class="view" id="v-game" aria-label="Game day"></section>
-  <section class="view" id="v-go" aria-label="Eat, drink and do"></section>
-  <section class="view" id="v-info" aria-label="Info"></section>
+  <section class="view" id="v-air" aria-label="Airport and departure"></section>
   <footer>VEGAS POCKET · NOV 14 TO 17, 2026 · FACTS CHECKED SAT NOV 14</footer>
 </main>
 
 <nav class="tabs" aria-label="Sections"><div>
-  <button type="button" data-tab="now"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg>NOW</button>
-  <button type="button" data-tab="plan"><svg viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/></svg>PLAN</button>
+  <button type="button" data-tab="now"><svg viewBox="0 0 24 24"><path d="M4 11l8-7 8 7v8a1 1 0 01-1 1h-4v-6H9v6H5a1 1 0 01-1-1z"/></svg>HOME</button>
+  <button type="button" data-tab="go"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg>FIND</button>
+  <button type="button" data-tab="around"><svg viewBox="0 0 24 24"><circle cx="6" cy="18" r="2.2"/><circle cx="18" cy="6" r="2.2"/><path d="M8.2 18H15a3.5 3.5 0 000-7H9a3.5 3.5 0 010-7h6.8"/></svg>AROUND</button>
   <button type="button" data-tab="game"><svg viewBox="0 0 24 24"><ellipse cx="12" cy="12" rx="9" ry="5.5" transform="rotate(-35 12 12)"/><path d="M9.5 14.5l5-5M10.6 11.2l2.2 2.2M12 9.8l2.2 2.2"/></svg>GAME</button>
-  <button type="button" data-tab="go"><svg viewBox="0 0 24 24"><path d="M12 21s-6.5-6-6.5-11a6.5 6.5 0 0113 0c0 5-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.3"/></svg>GO</button>
-  <button type="button" data-tab="info"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 11v5.5M12 7.6v.4"/></svg>INFO</button>
+  <button type="button" data-tab="air"><svg viewBox="0 0 24 24"><path d="M10.5 3.6c0-1.1 3-1.1 3 0V9l7 4.5v2l-7-2.2V18l2 1.6V21l-3.5-1L8.5 21v-1.4l2-1.6v-4.7l-7 2.2v-2l7-4.5z"/></svg>AIRPORT</button>
 </div></nav>
 
 <div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="sheet-h">
@@ -297,76 +282,6 @@ const HOTELS={
   ny:{name:'New York-New York',q:'New York-New York Hotel & Casino Las Vegas',taxi:'about $25',site:'https://newyorknewyork.mgmresorts.com/',
       out:'Checkout time is on your key packet; most Strip hotels use 11:00 AM.'}
 };
-const MEET='The footbridge over Tropicana Ave between Excalibur and New York-New York';
-
-// status: fixed = a real appointment, idea = a suggestion. ex / ny = text that swaps with the hotel toggle.
-const DAYS=[
- {id:'sat',label:'Saturday',short:'SAT',num:'14',date:'2026-11-14',sub:'Land, settle in, find each other.',stops:[
-  {t:'15:00',title:'Check in and drop bags',cat:'Hotel',where:'Your hotel',
-   ex:'Excalibur posts check-in at 3:00 PM. If you are early, the bell desk will hold your bags.',
-   ny:'Rooms are usually ready mid-afternoon. If you are early, the bell desk will hold your bags.'},
-  {t:'17:30',title:'Meet in the middle',cat:'Meet',where:'Footbridge over Tropicana Ave',map:'Excalibur pedestrian bridge Tropicana Las Vegas',
-   note:'The two hotels face each other across Tropicana. The footbridge between them is about five minutes from either lobby, and you cannot cross at street level there.'},
-  {t:'18:30',title:'Dinner close to home',cat:'Eat',where:'Either hotel',go:'eat',
-   ex:'In the castle: Buca di Beppo for family-style Italian, or Dick\'s Last Resort for loud and silly. Across the bridge, Nine Fine Irishmen and Il Fornaio.',
-   ny:'Downstairs: Nine Fine Irishmen (Irish pub), Il Fornaio (Italian), or Gallagher\'s Steakhouse if you booked. Across the bridge, Buca di Beppo.'},
-  {t:'20:30',title:'The Park, then the Bellagio fountains',cat:'See',where:'The Park to Park MGM to Bellagio',map:'Aria Express Tram Park MGM Station',
-   note:'Walk The Park beside New York-New York to Park MGM and ride the free Aria Express tram to Bellagio. It runs every 7 to 10 minutes. The fountains go off through the evening.'},
-  {t:'21:30',title:'Live music or dueling pianos',cat:'Drink',where:'New York-New York',map:'Nine Fine Irishmen Las Vegas',
-   note:'Nine Fine Irishmen has a live band most nights, starting around 9. The Bar at Times Square, on the same casino floor, is the dueling piano bar.'}
- ]},
- {id:'sun',label:'Sunday',short:'SUN',num:'15',date:'2026-11-15',sub:'Game day. Raiders and Seahawks at 1:05 PM.',stops:[
-  {t:'09:00',title:'Breakfast before the crowd',cat:'Eat',where:'Your hotel',
-   ex:'The Buffet at Excalibur does breakfast and brunch. Johnny Rockets is open around the clock. The food court upstairs has Einstein Bros. and Krispy Kreme.',
-   ny:'America serves breakfast all morning. Greenberg\'s Deli and 48th and Crepe on Village Street are quicker.'},
-  {t:'10:15',title:'Phones, tickets, clear bag',cat:'Prep',where:'Before you leave the room',tab:'game',
-   note:'Add your tickets to your phone wallet on hotel Wi-Fi. Bags must be clear and no bigger than 12 by 6 by 12 inches. The stadium takes cards only.'},
-  {t:'10:30',title:'Meet at the Excalibur tram station',cat:'Meet',where:'Front of the castle, by the footbridge',map:'Excalibur Tram Station Las Vegas',status:'fixed',
-   ex:'Out the front doors toward the Strip. The tram station sits where the footbridge from New York-New York lands.',
-   ny:'Leave about 10:20. Cross the footbridge over Tropicana; the tram station is right where it lands at Excalibur.'},
-  {t:'10:40',title:'Free tram to Mandalay Bay',cat:'Ride',where:'Excalibur to Mandalay Bay, express',
-   note:'Southbound trams skip Luxor and take about five minutes. They are posted to start at 10 AM. If the line is long, walk it indoors through Luxor and Mandalay Place in 20 to 25 minutes.'},
-  {t:'10:50',title:'Walk the Hacienda Bridge',cat:'Walk',where:'Mandalay Bay to Allegiant Stadium',map:'Hacienda Avenue Bridge Las Vegas',
-   note:'Follow the crowd through Mandalay Bay to Hacienda Ave. The bridge is closed to cars on game days. About 0.3 miles, 10 to 15 minutes.'},
-  {t:'11:05',title:'Doors open',cat:'Game',where:'Allegiant Stadium',status:'fixed',map:'Allegiant Stadium',
-   note:'Two hours to find your seats, eat, and look around. Parking lots open at 9:00 AM for anyone tailgating.'},
-  {t:'13:05',title:'Kickoff: Raiders vs Seahawks',cat:'Game',where:'Allegiant Stadium',status:'fixed',tab:'game',
-   note:'The stadium is enclosed, so weather is not a factor inside.'},
-  {t:'16:30',title:'Walk back the way you came',cat:'Walk',where:'Hacienda Bridge to Mandalay Bay',
-   note:'The tram back fills fast after a game. The indoor walk through Mandalay Place and Luxor is often quicker than the line.'},
-  {t:'18:30',title:'Dinner and the night game',cat:'Eat',where:'Either hotel',go:'eat',
-   ex:'TAP Sports Bar in the castle has the late game on. Across the bridge, Tom\'s Watch Bar is wall-to-wall screens.',
-   ny:'Tom\'s Watch Bar is wall-to-wall screens for the late game. Shake Shack and Broadway Burger Bar are the easy options.'}
- ]},
- {id:'mon',label:'Monday',short:'MON',num:'16',date:'2026-11-16',sub:'Free day. Pick a direction.',stops:[
-  {t:'09:30',title:'Slow breakfast',cat:'Eat',where:'Your hotel',
-   ex:'The Buffet at Excalibur, or coffee at The Roasted Bean.',
-   ny:'America for a sit-down breakfast, or a crepe from 48th and Crepe.'},
-  {t:'11:00',title:'Option A: the Strip, heading north',cat:'See',where:'Park MGM to Bellagio and beyond',go:'do',
-   note:'Ride the free Aria Express tram from Park MGM to Bellagio for the Conservatory and the fountains, then keep walking north toward Caesars and the LINQ. Blocks are longer than they look.'},
-  {t:'11:00',title:'Option B: Hoover Dam',cat:'See',where:'About 45 minutes each way by car',map:'Hoover Dam',
-   note:'Needs a car or a tour. Plan on half a day door to door.'},
-  {t:'15:00',title:'Coaster and chocolate',cat:'Do',where:'New York-New York',map:'Big Apple Coaster Las Vegas',
-   note:'The Big Apple Coaster loops around the hotel skyline. Hershey\'s Chocolate World is two floors of candy at street level.'},
-  {t:'17:15',title:'Monday night game, if you want it',cat:'Drink',where:'Tom\'s Watch Bar or TAP Sports Bar',
-   note:'Both sports bars carry the Monday night game. Kickoff is usually around 5:15 PM here.'},
-  {t:'19:00',title:'Fremont Street, downtown',cat:'See',where:'About 15 to 25 minutes by car',map:'Fremont Street Experience',
-   note:'Old Vegas under a light canopy, with live bands on outdoor stages. Rideshare is quickest. The Deuce bus also goes downtown; a 24-hour pass is $8.'},
-  {t:'20:00',title:'Or stay in for a show',cat:'Show',where:'Excalibur',go:'show',
-   note:'Tournament of Kings, The Australian Bee Gees Show, Mac King\'s comedy magic and Thunder From Down Under all play the castle. Not every show runs every night, so check the box office.'}
- ]},
- {id:'tue',label:'Tuesday',short:'TUE',num:'17',date:'2026-11-17',sub:'Pack, check out, fly home.',stops:[
-  {t:'08:30',title:'Breakfast and pack',cat:'Eat',where:'Your hotel',
-   ex:'Johnny Rockets is open around the clock if your flight is early.',
-   ny:'America or Greenberg\'s Deli. Village Street is fastest.'},
-  {t:'11:00',title:'Check out',cat:'Hotel',where:'Your hotel',status:'fixed',
-   ex:'Checkout is posted as 11:00 AM. Late flight? The bell desk will hold your bags.',
-   ny:'Check your key packet for the checkout time; most Strip hotels use 11:00 AM. The bell desk will hold bags for a late flight.'},
-  {t:'--',title:'Ride to the airport',cat:'Ride',where:'Harry Reid International (LAS)',flight:true,tab:'info',
-   note:'The airport is about two miles away, but this is Grand Prix week and roads north of here are being closed off. Leave a cushion.'}
- ]}
-];
-
 // at: ny / ex = inside that hotel, walk = short walk from either, ride = needs a ride
 const PLACES=[
  {id:'nfi',cat:'eat',at:'ny',name:'Nine Fine Irishmen',where:'New York-New York',text:'An Irish pub built in Ireland and shipped over. Fish and chips, shepherd\'s pie, and a live band most nights from around 9.'},
@@ -418,8 +333,7 @@ const PLACES=[
 
 /* ---------- state ---------- */
 const LS='vegas-pocket-v1';
-const S=Object.assign({hotel:null,day:null,done:{},saved:{},flight:''},load(),{tab:'now',cat:'all',near:'any'});
-S.day=null; // always open on Now, on today
+const S=Object.assign({hotel:null,saved:{},flight:''},load(),{tab:'now',cat:'all',near:'any'}); // always open on Home
 function load(){try{return JSON.parse(localStorage.getItem(LS))||{}}catch(e){return {}}}
 function save(){try{localStorage.setItem(LS,JSON.stringify(S))}catch(e){}}
 
@@ -437,7 +351,6 @@ function pt(ms){
 function fmt(hm){ if(hm==='--')return {h:'TBD',ap:''}; let [h,m]=hm.split(':').map(Number);const ap=h<12?'AM':'PM';h=h%12||12;return {h:`${h}:${String(m).padStart(2,'0')}`,ap}; }
 function fmtMin(mins){mins=((mins%1440)+1440)%1440;const h=Math.floor(mins/60),m=mins%60;const f=fmt(`${h}:${String(m).padStart(2,'0')}`);return `${f.h} ${f.ap}`;}
 function toMin(hm){const [h,m]=hm.split(':').map(Number);return h*60+m;}
-function todayId(){const d=pt(nowMs()).date;const day=DAYS.find(x=>x.date===d);return day?day.id:(d<DAYS[0].date?DAYS[0].id:DAYS[DAYS.length-1].id);}
 
 /* ---------- helpers ---------- */
 const $=s=>document.querySelector(s);
@@ -448,7 +361,6 @@ const ghours=q=>'https://www.google.com/search?q='+encodeURIComponent(q+' Las Ve
 const H=()=>HOTELS[S.hotel||'ex'];
 const other=()=>HOTELS[S.hotel==='ny'?'ex':'ny'];
 const ext='target="_blank" rel="noopener"';
-function noteFor(s){return s[S.hotel||'ex']||s.note||'';}
 
 /* ---------- game clock ---------- */
 function gameState(){
@@ -471,83 +383,60 @@ function leaveBy(){
 }
 
 /* ---------- views ---------- */
-function stopHTML(s,i,dayId,isNext){
-  const key=dayId+':'+i,done=!!S.done[key];
-  let t=s.t,extra='';
-  if(s.flight){const lb=leaveBy();if(lb){t=`${Math.floor(lb.carMin/60)}:${String(lb.carMin%60).padStart(2,'0')}`;extra=`<p><b>In the car by ${lb.car}</b> for your ${lb.flight} flight. That puts you at the airport two hours ahead.</p>`;}
-    else extra=`<p>Add your flight time under Info and this turns into a leave-by time.</p>`;}
-  const f=fmt(t);
-  return `<li class="stop${done?' done':''}${isNext?' next':''}">
-    <div class="t"><b>${f.h}</b>${f.ap}</div>
-    <div>
-      <h3>${esc(s.title)}</h3>
-      <div class="where">${esc(s.where)}</div>
-      <p>${esc(noteFor(s))}</p>${extra}
-      <div class="row">
-        <span class="tag ${s.status==='fixed'?'fixed':'idea'}">${s.status==='fixed'?'Set':'Idea'}</span>
-        <span class="tag">${esc(s.cat)}</span>
-        ${s.map?`<a class="lnk" ${ext} href="${gmap(s.map)}">Map</a>`:''}
-        ${s.tab?`<button type="button" class="lnk" data-tab="${s.tab}">${s.tab==='game'?'Game day':'Details'}</button>`:''}
-        ${s.go?`<button type="button" class="lnk" data-go="${s.go}">See picks</button>`:''}
-        <button type="button" class="lnk${done?' on':''}" data-done="${key}" aria-pressed="${done}">${done?'Done':'Mark done'}</button>
-      </div>
-    </div></li>`;
-}
-function nextIndex(day){
-  const n=pt(nowMs());if(day.date!==n.date)return -1;
-  return day.stops.findIndex((s,i)=>!S.done[day.id+':'+i]&&s.t!=='--'&&toMin(s.t)>=n.mins-20);
-}
-
+const tile=(attr,title,sub)=>`<button type="button" class="tile" ${attr}><b>${title}</b><span>${sub}</span></button>`;
 function renderNow(){
-  const g=gameState(),n=pt(nowMs()),day=DAYS.find(d=>d.id===todayId()),h=H();
+  const g=gameState(),n=pt(nowMs()),h=H(),lb=leaveBy(),tue=n.date>='2026-11-17';
   let hero;
   if(g.k==='pre'||g.k==='lots'||g.k==='doors'){
     hero=`<p class="eyebrow reveal reveal-1">${g.label}</p>
       <div class="count reveal reveal-2" id="count">${countHTML(g.to)}</div>
       <p class="line reveal reveal-3"><b>Raiders vs Seahawks</b> · Sunday 1:05 PM · Allegiant Stadium</p>
-      <div class="actions reveal reveal-4"><button type="button" class="btn primary" data-tab="game">Game day plan</button><a class="btn" ${ext} href="${gwalk('Allegiant Stadium')}">Walk there</a></div>`;
+      <div class="actions reveal reveal-4"><button type="button" class="btn primary" data-tab="game">Getting to the game</button><a class="btn" ${ext} href="${gwalk('Allegiant Stadium')}">Walk there</a></div>`;
   }else if(g.k==='live'){
     hero=`<p class="eyebrow reveal reveal-1">Sunday at Allegiant Stadium</p>
       <div class="count reveal reveal-2">GAME ON</div>
       <p class="line reveal reveal-3"><b>Raiders vs Seahawks.</b> Afterward, walk back over the Hacienda Bridge; the indoor route through Mandalay Place and Luxor beats the tram line.</p>
       <div class="actions reveal reveal-4"><button type="button" class="btn primary" data-tab="game">Getting back</button></div>`;
   }else{
-    const lb=leaveBy();
-    hero=`<p class="eyebrow reveal reveal-1">${n.date>='2026-11-17'?'Fly-out day':'Still in town'}</p>
-      <div class="count reveal reveal-2">${lb?lb.car.replace(' ','<small>')+'</small>':(n.date>='2026-11-17'?'HEAD HOME':'FREE DAY')}</div>
-      <p class="line reveal reveal-3">${lb?`<b>Be in the car by then</b> for your ${lb.flight} flight.`:(n.date>='2026-11-17'?'<b>Checkout, then the airport.</b> Add your flight time for a leave-by.':'<b>No schedule today.</b> Pick a direction and go.')}</p>
-      <div class="actions reveal reveal-4"><button type="button" class="btn primary" data-tab="${n.date>='2026-11-17'?'info':'go'}">${n.date>='2026-11-17'?'Leaving plan':'Find something'}</button><button type="button" class="btn" data-tab="plan">Today's ideas</button></div>`;
+    hero=`<p class="eyebrow reveal reveal-1">${tue?'Fly-out day':'Heading home Tuesday'}</p>
+      <div class="count reveal reveal-2">${lb?lb.car.replace(' ','<small>')+'</small>':(tue?'HEAD HOME':'FLY OUT TUE')}</div>
+      <p class="line reveal reveal-3">${lb?`<b>Be in the car by then</b> ${tue?'':'on Tuesday '}for your ${lb.flight} flight.`:'<b>Add your flight time</b> and this turns into a leave-by time.'}</p>
+      <div class="actions reveal reveal-4"><button type="button" class="btn primary" data-tab="air">Airport and timing</button><button type="button" class="btn" data-go="all">Find something</button></div>`;
   }
-  const ni=nextIndex(day);
-  const upcoming=day.stops.map((s,i)=>({s,i})).filter(x=>ni<0?true:x.i>=ni).slice(0,3);
   $('#v-now').innerHTML=`
     <div class="hero"><div class="bulbs" aria-hidden="true"></div>${hero}</div>
-    <p class="eyebrow reveal reveal-4" style="margin-top:var(--space-lg)">${day.date===n.date?'Up next today':day.label+' at a glance'}</p>
-    <ul class="tl reveal reveal-5">${upcoming.map((x,k)=>stopHTML(x.s,x.i,day.id,k===0&&ni>=0)).join('')}</ul>
-    <div class="actions"><button type="button" class="btn quiet" data-tab="plan">Full plan for ${day.label}</button></div>
-    <div class="grid2">
-      <button type="button" class="tile" data-go="eat"><b>EAT NEAR ME</b><span>What is good inside ${esc(h.name)}</span></button>
-      <button type="button" class="tile" data-go="do"><b>THINGS TO DO</b><span>Walkable, and worth a ride</span></button>
-      <button type="button" class="tile" data-info="around"><b>GET AROUND</b><span>Free trams, monorail, the Deuce</span></button>
-      <button type="button" class="tile" data-info="leave"><b>FLY OUT</b><span>Tuesday checkout and airport ride</span></button>
+    <div class="grid2 reveal reveal-5">
+      ${tile('data-go="eat"','FOOD','Inside '+esc(h.name)+' and a short walk away')}
+      ${tile('data-go="drink"','BARS','Pubs, dueling pianos, sports bars')}
+      ${tile('data-go="show"','SHOWS','What plays at the two hotels and nearby')}
+      ${tile('data-go="do"','THINGS TO DO','Walkable, and worth a ride')}
+      ${tile('data-tab="around"','GET AROUND','Free trams, monorail, bus, rides')}
+      ${tile('data-tab="air"','AIRPORT',lb?'In the car by '+lb.car+' on Tuesday':'Checkout, the ride, and when to leave')}
     </div>
     <div class="card teal">
       <p class="eyebrow">Two hotels, one group</p>
       <h3 class="h3">MEET IN THE MIDDLE</h3>
-      <p>${esc(h.name)} and ${esc(other().name)} face each other across Tropicana Ave. The footbridge between them is about five minutes from either lobby.</p>
+      <p>${esc(h.name)} and ${esc(other().name)} face each other across Tropicana Ave. The footbridge between them is about five minutes from either lobby, and you cannot cross at street level there.</p>
       <div class="actions"><a class="btn" ${ext} href="${gwalk(other().q)}">Walk to ${esc(other().name)}</a></div>
-    </div>`;
-}
-
-function renderPlan(){
-  if(!S.day)S.day=todayId();
-  const day=DAYS.find(d=>d.id===S.day)||DAYS[0],ni=nextIndex(day);
-  $('#v-plan').innerHTML=`
-    <p class="eyebrow">${TRIP.dates}</p>
-    <div class="chips" role="group" aria-label="Day">${DAYS.map(d=>`<button type="button" class="chip" data-day="${d.id}" aria-pressed="${d.id===day.id}"><b>${d.num}</b>${d.short}</button>`).join('')}</div>
-    <h2 class="h2">${day.label.toUpperCase()}</h2>
-    <p class="sub">${esc(day.sub)} Only the items marked Set are real appointments. The rest are ideas.</p>
-    <ul class="tl">${day.stops.map((s,i)=>stopHTML(s,i,day.id,i===ni)).join('')}</ul>`;
+    </div>
+    <details id="i-know"><summary>GOOD TO KNOW</summary><div class="body">
+      <p><b>Carry ID.</b> You need to be 21 for the casino floor, and bars check.</p>
+      <p><b>Drinks on the Strip</b> are legal to carry outside, but not in glass. Ask for a plastic cup.</p>
+      <p><b>Drink water.</b> The air is very dry, and it catches visitors out on day two.</p>
+      <p><b>Casinos allow smoking.</b> Restaurants and showrooms generally do not.</p>
+      <p><b>Use hotel Wi-Fi</b> to load tickets and boarding passes before you head out. Cell service thins out in crowds.</p>
+    </div></details>
+    <details id="i-help"><summary>IF SOMETHING GOES WRONG</summary><div class="body">
+      <p><b>Emergency:</b> call 911. Hotel security also responds fast; any dealer or desk can call them.</p>
+      <p><b>Lost someone?</b> Go to the footbridge between the two hotels and call them from there.</p>
+      <p><b>Lost a room key or wallet?</b> Front desk first, with ID.</p>
+      <div class="actions"><a class="btn" href="tel:911">Call 911</a><a class="btn" ${ext} href="${gmap('pharmacy near '+h.q)}">Nearest pharmacy</a><a class="btn" ${ext} href="${gmap('urgent care near '+h.q)}">Urgent care</a><a class="btn" ${ext} href="${h.site}">${esc(h.name)} site</a></div>
+    </div></details>
+    <details id="i-src"><summary>WHERE THIS CAME FROM</summary><div class="body">
+      <p class="src">Checked Saturday, Nov 14, 2026. Game times, bag policy, rideshare lot and bridge closure: <a ${ext} href="https://www.allegiantstadium.com/">allegiantstadium.com</a>. Monorail hours and fares: <a ${ext} href="https://www.lvmonorail.com/">lvmonorail.com</a>. Bus fares: <a ${ext} href="https://www.rtcsnv.com/ways-to-travel/fares-passes/">rtcsnv.com</a>. Excalibur outlets and shows: the hotel's 2026 fact sheet. New York-New York outlets and Excalibur checkout time: the hotels' Marriott listings. Road closures: FOX5 Las Vegas, Nov 6.</p>
+      <p class="src">Tram hours, taxi fares, walking times and Aria Express hours come from third-party guides or are estimates, so treat them as about right.</p>
+      <p class="src">Nothing you tap here leaves your phone. Saved places and your flight time are stored on this device only.</p>
+    </div></details>`;
 }
 
 function renderGame(){
@@ -611,7 +500,7 @@ function renderGo(){
   list.sort((a,b)=>rank[a.at]-rank[b.at]);
   const badge=p=>p.at===mine?'In your hotel':p.at===oth?'5 min over the bridge':p.at==='walk'?'Short walk':'Needs a ride';
   $('#v-go').innerHTML=`
-    <p class="eyebrow">Eat, drink, do</p>
+    <p class="eyebrow">Food, bars, shows, things to do</p>
     <h2 class="h2">WHAT SOUNDS GOOD?</h2>
     <div class="chips" role="group" aria-label="Kind">${CATS.map(c=>`<button type="button" class="chip" data-cat="${c[0]}" aria-pressed="${S.cat===c[0]}">${c[1]}</button>`).join('')}</div>
     <div class="chips" role="group" aria-label="How far">${NEARS.map(c=>`<button type="button" class="chip" data-near="${c[0]}" aria-pressed="${S.near===c[0]}">${c[1]}</button>`).join('')}</div>
@@ -626,71 +515,103 @@ function renderGo(){
     <p class="src" style="margin-top:var(--space-md)">Hours change and some shows skip nights. The Hours link opens a live search so you can check before you walk over.</p>`;
 }
 
-function renderInfo(){
-  const h=H(),lb=leaveBy();
-  $('#v-info').innerHTML=`
-    <p class="eyebrow">Getting around and getting home</p>
-    <h2 class="h2">THE PRACTICAL PART</h2>
-
-    <details id="i-around" open><summary>GETTING AROUND</summary><div class="body">
-      <h4>On foot</h4>
-      <p>Hotels on the Strip look close and are not. Budget 10 to 15 minutes per resort. At Tropicana Ave you cross by footbridge, not at street level: bridges link all four corners, including Excalibur, New York-New York and MGM Grand.</p>
-      <h4>Free tram: Excalibur, Luxor, Mandalay Bay</h4>
+function renderAround(){
+  $('#v-around').innerHTML=`
+    <p class="eyebrow">From ${esc(H().name)}</p>
+    <h2 class="h2">GETTING AROUND</h2>
+    <p class="sub">Most of what you want is a walk or a free tram away. Save rides for downtown and the airport.</p>
+    <div class="card teal">
+      <p class="eyebrow">On foot</p>
+      <h3 class="h3">BLOCKS ARE LONGER THAN THEY LOOK</h3>
+      <p>Budget 10 to 15 minutes per resort. At Tropicana Ave you cross by footbridge, not at street level: bridges link all four corners, including Excalibur, New York-New York and MGM Grand.</p>
+    </div>
+    <div class="card">
+      <p class="eyebrow">Free tram · south</p>
+      <h3 class="h3">EXCALIBUR, LUXOR, MANDALAY BAY</h3>
       <p>Posted to run 10 AM to midnight daily, every 3 to 7 minutes. Southbound is express to Mandalay Bay. Northbound stops at Luxor, then Excalibur. The station is out front of Excalibur, by the footbridge.</p>
-      <h4>Free tram: Park MGM, Crystals, Bellagio</h4>
-      <p>The Aria Express. Listed as 8 AM to 2 AM daily, every 7 to 10 minutes, about six minutes end to end. Board at Park MGM, a short walk north of New York-New York through The Park.</p>
-      <h4>Monorail</h4>
-      <p>Closest station is MGM Grand, across the Strip by footbridge. It runs up the east side to the LINQ, Harrah's, the Convention Center and Sahara. Sunday 7 AM to 3 AM, Monday 7 AM to midnight, and nonstop from Tuesday 7 AM for race week. $6.25 a ride or $15.50 for a day pass; a little less if you buy on your phone. It does not go to the airport or the stadium.</p>
-      <h4>The Deuce bus</h4>
+      <div class="actions"><a class="btn" ${ext} href="${gmap('Excalibur Tram Station Las Vegas')}">Tram station</a><button type="button" class="btn" data-tab="game">To the stadium</button></div>
+    </div>
+    <div class="card">
+      <p class="eyebrow">Free tram · north</p>
+      <h3 class="h3">PARK MGM, CRYSTALS, BELLAGIO</h3>
+      <p>The Aria Express. Listed as 8 AM to 2 AM daily, every 7 to 10 minutes, about six minutes end to end. Board at Park MGM, a short walk north of New York-New York through The Park. It drops you at the Bellagio fountains.</p>
+      <div class="actions"><a class="btn" ${ext} href="${gmap('Aria Express Tram Park MGM Station')}">Park MGM station</a></div>
+    </div>
+    <div class="card">
+      <p class="eyebrow">Monorail</p>
+      <h3 class="h3">UP THE EAST SIDE OF THE STRIP</h3>
+      <p>Closest station is MGM Grand, across the Strip by footbridge. It runs to the LINQ, Harrah's, the Convention Center and Sahara. Sunday 7 AM to 3 AM, Monday 7 AM to midnight, and nonstop from Tuesday 7 AM for race week.</p>
+      <p>$6.25 a ride or $15.50 for a day pass; a little less if you buy on your phone. It does not go to the airport or the stadium.</p>
+      <div class="actions"><a class="btn" ${ext} href="https://www.lvmonorail.com/">Monorail tickets</a></div>
+    </div>
+    <div class="card">
+      <p class="eyebrow">The Deuce bus</p>
+      <h3 class="h3">THE STRIP TO DOWNTOWN</h3>
       <p>Double-decker bus up and down the Strip to downtown, about every 15 minutes. $6 for two hours, $8 for 24 hours, $20 for three days. Buy in the rideRTC app, or on board with exact fare.</p>
-      <h4>Rideshare and taxis</h4>
+      <div class="actions"><a class="btn" ${ext} href="https://www.rtcsnv.com/ways-to-travel/fares-passes/">Bus fares</a></div>
+    </div>
+    <div class="card">
+      <p class="eyebrow">Rideshare and taxis</p>
+      <h3 class="h3">FOLLOW THE SIGNS, NOT THE CURB</h3>
       <p>Each hotel has a marked rideshare pickup, usually in or near the parking garage; follow the signs from the casino floor. Taxis line up at the main entrance.</p>
-      <div class="actions"><a class="btn" ${ext} href="https://www.lvmonorail.com/">Monorail</a><a class="btn" ${ext} href="https://www.rtcsnv.com/ways-to-travel/fares-passes/">Bus fares</a></div>
-    </div></details>
-
-    <details id="i-f1"><summary>GRAND PRIX WEEK</summary><div class="body">
-      <p>The Las Vegas Grand Prix runs Thursday to Saturday, Nov 19 to 21, after you leave. The track is being built now, and it sits north of you: Las Vegas Blvd from Harmon up to Sands, plus Koval and Harmon. Tropicana and the two hotels are outside it.</p>
-      <p><b>What you will notice:</b> Koval Lane is closed between Rochelle and Harmon from Saturday through Nov 23. Starting Tuesday, the Deuce and several bus routes switch to race-week routes. Rides heading north or east take longer than the map says.</p>
-      <p><b>What to do about it:</b> add 15 to 20 minutes to any ride, and to the airport run on Tuesday.</p>
+    </div>
+    <div class="card flag">
+      <p class="eyebrow">This week only</p>
+      <h3 class="h3">GRAND PRIX ROAD WORK</h3>
+      <p>The Las Vegas Grand Prix runs Nov 19 to 21, after you leave, but the track is being built now. It sits north of you: Las Vegas Blvd from Harmon up to Sands, plus Koval and Harmon. Tropicana and both hotels are outside it.</p>
+      <p>Koval Lane is closed between Rochelle and Harmon from Saturday through Nov 23. Starting Tuesday, the Deuce switches to race-week routes. Add 15 to 20 minutes to any ride heading north or east.</p>
       <div class="actions"><a class="btn" ${ext} href="https://transportation.f1lasvegasgp.com/">Race-week road map</a></div>
-    </div></details>
+    </div>`;
+}
 
-    <details id="i-leave" open><summary>LEAVING TUESDAY</summary><div class="body">
-      <p><b>${esc(h.name)}:</b> ${esc(h.out)} The bell desk holds bags if your flight is later.</p>
-      <h4>When to leave</h4>
+function renderAir(){
+  const h=H(),lb=leaveBy();
+  let timing;
+  if(lb){
+    const gap=lb.carMin-660; // minutes between an 11:00 AM checkout and the ride
+    const steps=[];
+    if(gap>=0){
+      steps.push(['Check out by 11:00 AM',gap>=45?`You have about ${gap>=120?Math.round(gap/60)+' hours':gap+' minutes'} before the ride. The bell desk will hold your bags.`:'Then straight to the car.']);
+      steps.push([`In the car by ${lb.car}`,'Half an hour covers the two-mile ride, the curb, and race-week traffic.']);
+    }else{
+      steps.push([`In the car by ${lb.car}`,'That is before the 11:00 AM checkout, so check out on your way through the lobby. Half an hour covers the ride, the curb, and race-week traffic.']);
+    }
+    steps.push([`At the airport by ${lb.airport}`,'Two hours ahead, for bag drop and security.']);
+    steps.push([`Flight departs ${lb.flight}`,'Boarding usually closes 15 to 20 minutes before that.']);
+    timing=`<ol class="steps">${steps.map(x=>`<li><b>${x[0]}</b><span>${x[1]}</span></li>`).join('')}</ol>`;
+  }else timing=`<p class="muted" style="margin-top:var(--space-sm)">Enter your departure time and this works out when to check out, when to be in the car, and when to be at the airport.</p>`;
+  $('#v-air').innerHTML=`
+    <p class="eyebrow">Tuesday, Nov 17 · Harry Reid International (LAS)</p>
+    <h2 class="h2">GETTING TO THE AIRPORT</h2>
+    <div class="card flag">
+      <p class="eyebrow">Your timing</p>
+      <h3 class="h3">WHEN TO LEAVE</h3>
       <div class="field"><label for="flight">My flight departs at</label><input type="time" id="flight" value="${esc(S.flight)}"></div>
-      ${lb?`<div class="result">Be in the car by <b>${lb.car}</b><br>At the airport by ${lb.airport}, two hours before your ${lb.flight} flight, with half an hour for the ride and race-week traffic.</div>`:`<p class="muted">Enter a time and this works out when to be in the car.</p>`}
-      <h4>The ride</h4>
-      <p>Harry Reid International is about two miles from the hotels. Taxis charge a flat zone fare between the airport and Strip hotels: ${h.taxi} for ${esc(h.name)}, with a possible $3 card fee. Ask the driver to confirm the flat rate before you pull away. Rideshare is usually similar outside of surge.</p>
-      <h4>Which terminal</h4>
-      <p>Terminal 1 and Terminal 3 are separate buildings with separate curbs. Check which one your airline uses before you get in the car.</p>
-      <div class="actions"><a class="btn" ${ext} href="https://www.harryreidairport.com/">Airport site</a><a class="btn" ${ext} href="${gmap('Harry Reid International Airport')}">Map</a></div>
-    </div></details>
-
-    <details id="i-know"><summary>GOOD TO KNOW</summary><div class="body">
-      <p><b>Carry ID.</b> You need to be 21 for the casino floor, and bars check.</p>
-      <p><b>Drinks on the Strip</b> are legal to carry outside, but not in glass. Ask for a plastic cup.</p>
-      <p><b>Drink water.</b> The air is very dry, and it catches visitors out on day two.</p>
-      <p><b>Casinos allow smoking.</b> Restaurants and showrooms generally do not.</p>
-      <p><b>Use hotel Wi-Fi</b> to load tickets and boarding passes before you head out. Cell service thins out in crowds.</p>
-    </div></details>
-
-    <details id="i-help"><summary>IF SOMETHING GOES WRONG</summary><div class="body">
-      <p><b>Emergency:</b> call 911. Hotel security also responds fast; any dealer or desk can call them.</p>
-      <p><b>Lost someone?</b> Go to the footbridge between the two hotels and call them from there.</p>
-      <p><b>Lost a room key or wallet?</b> Front desk first, with ID.</p>
-      <div class="actions"><a class="btn" href="tel:911">Call 911</a><a class="btn" ${ext} href="${gmap('pharmacy near '+h.q)}">Nearest pharmacy</a><a class="btn" ${ext} href="${gmap('urgent care near '+h.q)}">Urgent care</a><a class="btn" ${ext} href="${h.site}">${esc(h.name)} site</a></div>
-    </div></details>
-
-    <details id="i-src"><summary>WHERE THIS CAME FROM</summary><div class="body">
-      <p class="src">Checked Saturday, Nov 14, 2026. Game times, bag policy, rideshare lot and bridge closure: <a ${ext} href="https://www.allegiantstadium.com/">allegiantstadium.com</a>. Monorail hours and fares: <a ${ext} href="https://www.lvmonorail.com/">lvmonorail.com</a>. Bus fares: <a ${ext} href="https://www.rtcsnv.com/ways-to-travel/fares-passes/">rtcsnv.com</a>. Excalibur outlets and shows: the hotel's 2026 fact sheet. New York-New York outlets and Excalibur checkout time: the hotels' Marriott listings. Road closures: FOX5 Las Vegas, Nov 6.</p>
-      <p class="src">Tram hours, taxi fares, walking times and Aria Express hours come from third-party guides or are estimates, so treat them as about right. Plan times are suggestions except the ones marked Set.</p>
-      <p class="src">Nothing you tap here leaves your phone. Saved places, checked-off items and your flight time are stored on this device only.</p>
-    </div></details>`;
+      ${timing}
+    </div>
+    <div class="card">
+      <p class="eyebrow">${esc(h.name)}</p>
+      <h3 class="h3">CHECKING OUT</h3>
+      <p>${esc(h.out)} For a later flight, the bell desk holds bags.</p>
+    </div>
+    <div class="card">
+      <p class="eyebrow">About two miles from the hotels</p>
+      <h3 class="h3">THE RIDE</h3>
+      <p><b>Taxi:</b> flat zone fare between Strip hotels and the airport, ${h.taxi} from ${esc(h.name)}, with a possible $3 card fee. Ask the driver to confirm the flat rate before you pull away. Taxis wait at the main entrance, no app needed.</p>
+      <p><b>Rideshare:</b> usually similar outside of surge. Pickup is at the marked rideshare area, not the front door.</p>
+      <p><b>This week:</b> Grand Prix road work north of the hotels slows traffic. The half hour in your timing above allows for it.</p>
+      <div class="actions"><a class="btn" ${ext} href="${gmap('Harry Reid International Airport')}">Map</a></div>
+    </div>
+    <div class="card teal">
+      <p class="eyebrow">Before you get in the car</p>
+      <h3 class="h3">WHICH TERMINAL</h3>
+      <p>Terminal 1 and Terminal 3 are separate buildings with separate curbs. Check which one your airline uses and tell the driver.</p>
+      <div class="actions"><a class="btn" ${ext} href="https://www.harryreidairport.com/">Airport site</a></div>
+    </div>`;
 }
 
 /* ---------- wiring ---------- */
-const RENDER={now:renderNow,plan:renderPlan,game:renderGame,go:renderGo,info:renderInfo};
+const RENDER={now:renderNow,go:renderGo,around:renderAround,game:renderGame,air:renderAir};
 function show(tab,keepScroll){
   S.tab=tab;save();
   document.querySelectorAll('section.view').forEach(v=>v.classList.toggle('on',v.id==='v-'+tab));
@@ -708,16 +629,13 @@ document.addEventListener('click',e=>{
   const b=e.target.closest('button,a');if(!b)return;const d=b.dataset;
   if(d.hotel)return setHotel(d.hotel);
   if(d.tab)return show(d.tab);
-  if(d.day){S.day=d.day;save();return renderPlan();}
-  if(d.done){S.done[d.done]?delete S.done[d.done]:S.done[d.done]=1;save();return RENDER[S.tab]();}
   if(d.cat){S.cat=d.cat;save();return renderGo();}
   if(d.near){S.near=d.near;save();return renderGo();}
   if(d.save){S.saved[d.save]?delete S.saved[d.save]:S.saved[d.save]=1;save();return renderGo();}
   if(d.go){S.cat=d.go;S.near='any';return show('go');}
-  if(d.info){show('info');const el=$('#i-'+d.info);if(el){el.open=true;el.scrollIntoView({block:'start'});window.scrollBy(0,-70);}return;}
 });
 document.addEventListener('change',e=>{
-  if(e.target.id==='flight'){S.flight=e.target.value||'';save();renderInfo();}
+  if(e.target.id==='flight'){S.flight=e.target.value||'';save();renderAir();}
 });
 // keep the countdown honest without re-rendering the whole view
 setInterval(()=>{
@@ -728,7 +646,6 @@ setInterval(()=>{
 },20000);
 document.addEventListener('visibilitychange',()=>{if(!document.hidden)RENDER[S.tab]();});
 
-if(!RENDER[S.tab])S.tab='now';
 document.querySelectorAll('.seg button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.hotel===S.hotel));
 document.body.dataset.gk=gameState().k;
 show(S.tab);
